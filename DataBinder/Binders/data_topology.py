@@ -1,9 +1,9 @@
 import re
-from DataBinder.Inspectors import Units
 from DataBinder.Classes import Constant
 from DataBinder.Classes import Input
 from DataBinder.Classes import Output
 from DataBinder.Inspectors import patterns
+from DataBinder.Inspectors import test_for
 
 
 # Names which cannot be used as tokens for entities or transformations
@@ -70,7 +70,7 @@ def bind_data_topology(data, topology):
         for c in data.conditions:
             token = patterns.token_pattern.findall(c.id)[0]
             if token == entity:
-                if Units.is_flow_unit(c.unit):
+                if test_for.is_flow_unit(c.unit):
                     # Keep track of inflows
                     inflow_register.append(entity)
 
@@ -79,7 +79,7 @@ def bind_data_topology(data, topology):
     for entity in inflow_register:
         for c in data.conditions:
             token = patterns.token_pattern.findall(c.id)[0]
-            if token == entity and Units.is_concentration_unit(c.unit):
+            if token == entity and test_for.is_concentration_unit(c.unit):
 
                 # Create a new token for the input source
                 flow_token = f"{c.id}_flow"
