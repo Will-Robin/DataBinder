@@ -1,6 +1,6 @@
 class DataContainer:
     """
-    An structure for storing experimental data.
+    An structure for storing experimental data and conditions.
     """
 
     def __init__(self):

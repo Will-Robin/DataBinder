@@ -1,9 +1,8 @@
-"""
-A structure containing model topological information.
-"""
-
-
 class Entity:
+    """
+    An individual unit in a structure.
+    """
+
     def __init__(self, iden):
         """
         Attributes
@@ -28,6 +27,8 @@ class Entity:
 class Constant(Entity):
     """
     A structure for storing constants.
+
+    An alias for Entity, emphasising that it is derived from data.
     """
 
     def __init__(self, iden, value):
@@ -36,6 +37,10 @@ class Constant(Entity):
 
 
 class Transformation:
+    """
+    A transformation describes the conversion between entities.
+    """
+
     def __init__(self, iden):
         """
         Attributes
@@ -60,16 +65,27 @@ class Transformation:
 class Input(Transformation):
     """
     A structure for storing input data.
+
+    This is an alias for a Transformation to emphasise its derivation from
+    conditional information.
     """
 
 
 class Output(Transformation):
     """
     A structure for storing output data.
+
+    This is an alias for a Transformation to emphasise its derivation from
+    conditional information.
     """
 
 
 class Topology:
+    """
+    Stores the relationships between Entities, Transformations and their
+    derived types in a system.
+    """
+
     def __init__(self):
         """
         Attributes
@@ -84,7 +100,7 @@ class Topology:
         inputs: dict()
             Inputs into the systems (transformation-like)
             - connects a constant to an entity.
-        constants: dict()
+        outputs: dict()
             Outputs from the system (transformation-like)
             - connects an entity to a constant.
         """

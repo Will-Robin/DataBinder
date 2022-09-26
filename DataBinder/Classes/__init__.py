@@ -1,5 +1,5 @@
 """
-Data structures.
+Structures encapsulating data.
 """
 from .DataContainer import DataContainer
 
