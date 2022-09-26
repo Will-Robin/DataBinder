@@ -2,7 +2,13 @@
 Generate layouts for topologies using Graphviz.
 """
 import json
-from graphviz import Digraph
+
+try:
+    from graphviz import Digraph
+except ImportError:
+    print(
+        "\033[1m\033[91mImportError: graphviz not installed, DataBinder.Visualisation module will crash!\033[0m"
+    )
 
 
 def create_edges(container, graph):
