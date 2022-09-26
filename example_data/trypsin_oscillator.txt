@@ -1,0 +1,15 @@
+Tr.Tg>>Tr-Tg
+Tr-Tg>>Tg.Tg
+Tr-Tg>>Tr.Tr
+Tr.2>>Tr-2
+Tr-2>>Tr.2
+Tr.2>>Tr.H-Gln-Inh
+Ap.H-Gln-Inh>>Ap-H-Gln-Inh
+Ap-H-Gln-Inh>>Ap.H-Gln-Inh
+Ap-H-Gln-Inh>>Ap.Inh
+Tr.Inh>>InhTr
+Tr.H-Gln-Inh>>H-Gln-Inh-Tr
+Tr.2>>2-Tr
+Inh>>Inh-OH
+H-Gln-Inh>>H-Gln-Inh-OH
+2>>2-OH
