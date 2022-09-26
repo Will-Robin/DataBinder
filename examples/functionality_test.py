@@ -10,11 +10,11 @@ from DataBinder.Visualisation import Layouts
 
 
 # load data
-data_file = "example_data/exampleData.csv"
+data_file = "data/exampleData.csv"
 data_container = cont.from_csv(data_file)
 
 # load topology
-topology_file = "example_data/exampleReactionList.txt"
+topology_file = "data/exampleReactionList.txt"
 topology_container = topol.from_text(topology_file)
 
 # Validate that the data and topology are compatible
