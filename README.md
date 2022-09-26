@@ -13,3 +13,28 @@ data specified, it is trivial to make sure that they are compatible.
 
 This package aims to provide a framework for 'binding' data and models so that
 a complete and valid model can be compiled from both of them as output.
+
+## Usage
+
+This package requires Python 3.9 and graphviz (for generating layouts of
+topologies).
+
+See `test.py` and `example_data` for the functionality covered in this package.
+
+Topological information is represented as a series of transformations,
+represented as, for example:
+
+```
+A.B>>C
+C>>D.E
+```
+
+Above, 'entities' `A` and `B` are required for the *transformation* which creates
+*entity* `C`. Similarly, `C` is required for a transformation which creates `D`
+and `E`.
+
+There is a prototype sketch of a validation procedure which tests for
+compatibility between topologies and data.
+
+Simple Python functions can be created from topologies, as well as adjacency
+matrices.
