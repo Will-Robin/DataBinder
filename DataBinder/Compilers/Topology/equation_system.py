@@ -1,4 +1,4 @@
-def write_equations(topology):
+def write_equations(topology, unwrap_constants=False):
     """
     Create a system of equations from a topology
 
@@ -6,6 +6,9 @@ def write_equations(topology):
     ----------
     topology: DataBinder.Classes.Topology
         Topology to be converted.
+    unwrap_constants: bool
+        True: write the value stored in a Constant into output (e.g. 1.0).
+        False: write a token value for a Constant into output (e.g. C[n]).
 
     Returns
     -------
@@ -22,6 +25,8 @@ def write_equations(topology):
 
     # Create tokens for the equation output
     entity_tokens = {iden: f"S[{c}]" for c, iden in enumerate(entities)}
+
+    constant_tokens = {iden: f"C[{c}]" for c, iden in enumerate(constants)}
 
     rate_constants = {iden: f"k[{c}]" for c, iden in enumerate(transformations)}
 
@@ -52,7 +57,10 @@ def write_equations(topology):
                 input_set = inputs
                 current_token += f"+{input_rates[creator]}"
                 for requirement in input_set[creator].requires:
-                    val = constants[requirement].value
+                    if unwrap_constants:
+                        val = constants[requirement].value
+                    else:
+                        val = constant_tokens[requirement]
                     current_token += f"*{val}"
 
         # Write outgoing expressions

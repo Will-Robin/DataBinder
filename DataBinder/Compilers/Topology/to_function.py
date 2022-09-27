@@ -4,20 +4,23 @@ from .equation_system import write_equations
 TAB_SPACES = "    "
 
 
-def to_function(topology):
+def to_function(topology, unwrap_constants=False):
     """
     Create a python function from a topology.
 
     Parameters
     ----------
     topology: DataBinder.Classes.Topology
+    unwrap_constants: bool
+        True: write the value stored in a Constant into output (e.g. 1.0).
+        False: write a token value for a Constant into output (e.g. C[n]).
 
     Returns
     -------
     function_text: str
     """
 
-    equation_text = write_equations(topology)
+    equation_text = write_equations(topology, unwrap_constants=unwrap_constants)
 
     equation_lines = [x for x in equation_text.split("\n") if x != ""]
 
