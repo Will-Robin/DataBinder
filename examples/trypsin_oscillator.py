@@ -1,18 +1,81 @@
 from DataBinder.Constructors import Topology as topol
 from DataBinder.Compilers import to_function
 from DataBinder.Visualisation import Layouts
+from DataBinder.Classes import Input
+from DataBinder.Classes import Output
+from DataBinder.Classes import Constant
 
 topology_file = "data/trypsin_oscillator.txt"
 
+###############
 # load topology
+###############
 topology = topol.from_text(topology_file)
 
-function_text = to_function(topology)
+#################
+# Add input flows
+#################
+# Create a constant to describe the input flow
+Tr_conc_0 = 0.05
+Tr_flow = Constant("Tr_flow", Tr_conc_0)
+topology.add_constant(Tr_flow)
+# Connect Constant to Entity with an Input
+Tr_input = Input("Tr_flow>>Tr")
+Tr_input.requires.append("Tr_flow")
+Tr_input.creates.append("Tr")
+topology.add_input(Tr_input)
 
-print(function_text)
+# Create a constant to describe the input flow
+_2_conc_0 = 0.05
+_2_flow = Constant("2_flow", _2_conc_0)
+topology.add_constant(_2_flow)
+# Connect Constant to Entity with an Input
+_2_input = Input("2_flow>>2")
+_2_input.requires.append("2_flow")
+_2_input.creates.append("2")
+topology.add_input(_2_input)
 
+#############
+# Add outputs
+#############
+output_const_token = "#0"
+outlet = Constant(output_const_token, 0.0)  # value not relevant to outputs
+topology.add_constant(outlet)
+
+# Each entity leaves via the single output.
+for e in topology.entities:
+    # Create a token for the output process
+    output_token = f"{e}>>{output_const_token}"
+    output = Output(output_token)
+    output.requires.append(e)
+    output.creates.append(output_const_token)
+
+    topology.add_output(output)
+
+#########################
+# Create the ODE function
+#########################
+function_text = to_function(topology, unwrap_constants=True)
+
+print(function_text, "\n")
+
+###################
 # Generate a layout
-pos = Layouts.generate_topology_layout(topology, algorithm = "sfdp")
+###################
+pos = Layouts.generate_topology_layout(topology, algorithm="sfdp")
 
-for p in pos:
-    print(f"{p}: x: {pos[p][0]}, y: {pos[p][1]}")
+print("\nEntities\n--------")
+for e in topology.entities:
+    print(f"{e}: x: {pos[e][0]}, y: {pos[e][1]}")
+
+print("\nConstants\n---------")
+for c in topology.constants:
+    print(f"{c}: x: {pos[c][0]}, y: {pos[c][1]}")
+
+print("\nInputs\n------")
+for i in topology.inputs:
+    print(f"{i}: x: {pos[i][0]}, y: {pos[i][1]}")
+
+print("\nOutputs\n-------")
+for o in topology.outputs:
+    print(f"{o}: x: {pos[o][0]}, y: {pos[o][1]}")
