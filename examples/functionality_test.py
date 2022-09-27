@@ -1,3 +1,6 @@
+"""
+This script calls key functions from DataBinder.
+"""
 from DataBinder.Constructors import DataContainer as cont
 from DataBinder.Constructors import Topology as topol
 from DataBinder.Compilers import to_function
@@ -7,10 +10,12 @@ from DataBinder.Visualisation import Layouts
 
 
 # load data
-data_container = cont.from_csv("example_data/exampleData.csv")
+data_file = "data/exampleData.csv"
+data_container = cont.from_csv(data_file)
 
 # load topology
-topology_container = topol.from_text("example_data/exampleReactionList.txt")
+topology_file = "data/exampleReactionList.txt"
+topology_container = topol.from_text(topology_file)
 
 # Validate that the data and topology are compatible
 messages = data_topology.validate(data_container, topology_container)
