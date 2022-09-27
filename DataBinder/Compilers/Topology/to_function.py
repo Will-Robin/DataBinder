@@ -23,14 +23,20 @@ def to_function(topology):
 
     indented_equation_text = f"\n{TAB_SPACES}".join(equation_lines)
 
-    arguments = ["time", "S", "k", "inp", "out"]
+    arguments = ["time", "S", "k"]
+
+    if len(topology.inputs) > 0:
+        arguments.append("inp")
+
+    if len(topology.outputs) > 0:
+        arguments.append("out")
 
     arg_string = ", ".join(arguments)
 
     arg_docstring = f"\n{TAB_SPACES}".join(arguments)
 
     function_text = f'''
-def function({arg_string}):
+def model_function({arg_string}):
     """
     Function docstring.
 
@@ -47,7 +53,6 @@ def function({arg_string}):
 
     {indented_equation_text}
 
-    return P
-    '''
+    return P'''
 
     return function_text
