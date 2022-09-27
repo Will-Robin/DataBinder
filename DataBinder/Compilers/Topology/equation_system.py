@@ -23,8 +23,6 @@ def write_equations(topology):
     # Create tokens for the equation output
     entity_tokens = {iden: f"S[{c}]" for c, iden in enumerate(entities)}
 
-    constant_tokens = {iden: f"C[{c}]" for c, iden in enumerate(constants)}
-
     rate_constants = {iden: f"k[{c}]" for c, iden in enumerate(transformations)}
 
     input_rates = {iden: f"inp[{c}]" for c, iden in enumerate(inputs)}
@@ -55,7 +53,7 @@ def write_equations(topology):
                 current_token += f"+{input_rates[creator]}"
                 for requirement in input_set[creator].requires:
                     val = constants[requirement].value
-                    current_token += f"*{val}*{constant_tokens[requirement]}"
+                    current_token += f"*{val}"
 
         # Write outgoing expressions
         for user in entities[entity].used_by:
