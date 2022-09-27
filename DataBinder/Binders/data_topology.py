@@ -13,6 +13,15 @@ reserved_names = ["inflow", "outflow"]
 def validate(data, topology):
     """
     Check the data and topology for compatibility, omissions in data, etc.
+    Parameters
+    ----------
+    data: DataBinder.Classes.DataContainer
+    topology: DataBinder.Classes.Topology
+
+    Returns
+    -------
+    error_report: list[str]
+        List of error messages.
     """
 
     error_report = []
@@ -60,7 +69,8 @@ def bind_data_topology(data, topology):
 
     Returns
     -------
-
+    topology: DataBinder.Classes.Topology
+        Topology containing information from the data conditions.
     """
 
     # Reconcile experiment inputs with the topology.
