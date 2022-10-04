@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from DataBinder.Classes import Topology
 from DataBinder.Classes import Entity
 from DataBinder.Classes import Transformation
@@ -64,8 +66,7 @@ def from_text(filename):
     """
 
     # Load file contents as text
-    with open(filename, "r") as file:
-        text = file.read()
+    text = Path(filename).read_text()
 
     topology = from_string(text)
 

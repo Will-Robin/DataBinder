@@ -1,6 +1,8 @@
 """
 Constructors for a DataContainer object.
 """
+from pathlib import Path
+
 from DataBinder.Classes import DataContainer
 from DataBinder.Classes import ConditionValue
 from DataBinder.Classes import ConditionArray
@@ -189,8 +191,7 @@ def from_csv(filename):
     """
 
     # Read in file as text
-    with open(filename, "r") as file:
-        text = file.read()
+    text = Path(filename).read_text()
 
     data_container = from_string(text)
 
