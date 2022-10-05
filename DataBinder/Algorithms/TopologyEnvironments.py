@@ -1,5 +1,6 @@
 from DataBinder.Inspectors import test_for
 
+
 def generate_primes(num):
     """
     Generate the first `num` prime numbers.
@@ -81,8 +82,9 @@ def prime_ranking(ranking):
     return prime_ranking
 
 
-def two_level_sort(list_1, list_2):
+def two_level_ranking(list_1, list_2):
     """
+    Rank by list_1 then list_2.
 
     Parameters
     ----------
@@ -137,7 +139,6 @@ def assign_entity_environments(topology):
     Parameters
     ----------
     topology: DataBinder.Classes.Topology
-    max_iter: int
 
     Returns
     -------
@@ -166,10 +167,9 @@ def assign_entity_environments(topology):
     # rank invariants
     prime_rank = prime_ranking(initial_invariants)
     current_rank = rank_list(prime_rank)
-    updated_rank = [0.0 for x in current_rank]
-    next_rank = [0.0 for x in current_rank]
+    updated_rank = [0.0 for _ in current_rank]
+    next_rank = [0.0 for _ in current_rank]
 
-    i = 0
     while True:
 
         for c, e in enumerate(entities):
@@ -196,18 +196,17 @@ def assign_entity_environments(topology):
 
         new_prime_rank = prime_ranking(next_rank)
 
-        updated_rank = two_level_sort(current_rank, new_prime_rank)
+        updated_rank = two_level_ranking(current_rank, new_prime_rank)
 
         test = [(x, y) for x, y in zip(updated_rank, current_rank)]
 
+        current_rank = [x for x in updated_rank]
+
         if all(test):
-            current_rank = [x for x in updated_rank]
             break
 
-        prime_rank = [x for x in updated_rank]
-        i += 1
-
     return {e: x for e, x in zip(entities, prime_rank)}
+
 
 def assign_transformation_environments(topology):
     """
@@ -241,7 +240,6 @@ def assign_transformation_environments(topology):
     Parameters
     ----------
     topology: DataBinder.Classes.Topology
-    max_iter: int
 
     Returns
     -------
@@ -270,10 +268,9 @@ def assign_transformation_environments(topology):
     # rank invariants
     prime_rank = prime_ranking(initial_invariants)
     current_rank = rank_list(prime_rank)
-    updated_rank = [0.0 for x in current_rank]
-    next_rank = [0.0 for x in current_rank]
+    updated_rank = [0.0 for _ in current_rank]
+    next_rank = [0.0 for _ in current_rank]
 
-    i = 0
     while True:
 
         for c, e in enumerate(transformations):
@@ -300,15 +297,13 @@ def assign_transformation_environments(topology):
 
         new_prime_rank = prime_ranking(next_rank)
 
-        updated_rank = two_level_sort(current_rank, new_prime_rank)
+        updated_rank = two_level_ranking(current_rank, new_prime_rank)
 
         test = [(x, y) for x, y in zip(updated_rank, current_rank)]
 
+        current_rank = [x for x in updated_rank]
+
         if all(test):
-            current_rank = [x for x in updated_rank]
             break
 
-        prime_rank = [x for x in updated_rank]
-        i += 1
-
-    return {e: x for e, x in zip(transformations, prime_rank)}
+    return {e: x for e, x in zip(transformations, current_rank)}
