@@ -6,11 +6,12 @@ COMPILERS = ../DataBinder/Compilers/*.py
 CONSTRUCTORS = ../DataBinder/Constructors/*.py
 INSPECTORS = ../DataBinder/Inspectors/*.py
 VISUALISATION = ../DataBinder/Visualisation/*.py
+ALGORITHMS = ../DataBinder/Algorithms/*.py
 
 
 DATABINDER=$(ASSUMPTIONS) $(BINDERS) $(CLASSES) \
 	$(COMPILERS) $(CONSTRUCTORS) $(INSPECTORS) \
-	$(VISUALISATION)
+	$(VISUALISATION) $(ALGORITHMS)
 
 all: index.html
 
