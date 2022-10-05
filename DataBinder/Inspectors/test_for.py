@@ -4,6 +4,26 @@ Functions which test for things.
 from DataBinder.Inspectors import patterns
 
 
+def is_prime(number, primes_list):
+    """
+    Test if a number is prime.
+    Parameters
+    ----------
+    number: int
+
+    Returns
+    -------
+    bool
+    """
+
+    for prime in primes_list:
+        if not (number == prime or number % prime):
+            return False
+
+    primes_list.add(number)
+    return number
+
+
 def is_float(thing):
     """
     Test if an thing (e.g. str) can be converted to a float.
@@ -22,7 +42,6 @@ def is_float(thing):
         return True
     except ValueError:
         return False
-
 
 
 def is_concentration_unit(text):
