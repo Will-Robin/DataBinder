@@ -1,7 +1,10 @@
 # DataBinder
 
-This project aims to interface experimental conditions and data with models
-designed to describe them.
+This project aims to:
+
+1. Provide a general framework for exploring 'reaction graphs'.
+2. interface experimental conditions and data with models designed to describe
+   them.
 
 One of the key processes in modelling is to make sure that the model is designed
 within the parameters of the data it is designed to model. For example, does the
@@ -20,6 +23,9 @@ This package requires Python 3.9 and graphviz (for generating layouts of
 topologies).
 
 See `test.py` and `example_data` for the functionality covered in this package.
+
+API documentation is also available in the `doc` folder (once you have the files
+on your computer, open `docs/index.html` in your web browser).
 
 Topological information is represented as a series of transformations,
 represented as, for example:
