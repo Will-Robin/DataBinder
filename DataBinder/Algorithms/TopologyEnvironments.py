@@ -132,7 +132,7 @@ def assign_entity_environments(topology):
         a. old ranks
         b. new invariants
 
-    6. Repeat until ranking is stable
+    6. Repeat from 2 with new ranks until ranking is stable
 
     If entities are symmetric, they should have the same rank
 
@@ -172,6 +172,8 @@ def assign_entity_environments(topology):
 
     while True:
 
+        # Calculate the multiples of primes around each entity to create
+        # next_rank
         for c, e in enumerate(entities):
 
             current_invariant = 1.0
@@ -194,18 +196,23 @@ def assign_entity_environments(topology):
 
             next_rank[c] = current_invariant
 
+        # Generate a prime ranking for the new_ranking
         new_prime_rank = prime_ranking(next_rank)
 
+        # Update the previous ordering with that provided by the latest round
+        # of prime multiples
         updated_rank = two_level_ranking(current_rank, new_prime_rank)
 
-        test = [(x, y) for x, y in zip(updated_rank, current_rank)]
+        test = [x == y for x, y in zip(updated_rank, current_rank)]
 
+        # Update current ranking
         current_rank = [x for x in updated_rank]
+        prime_rank = prime_ranking(current_rank)
 
         if all(test):
             break
 
-    return {e: x for e, x in zip(entities, prime_rank)}
+    return {e: x for e, x in zip(entities, current_rank)}
 
 
 def assign_transformation_environments(topology):
@@ -233,7 +240,7 @@ def assign_transformation_environments(topology):
         a. old ranks
         b. new invariants
 
-    6. Repeat until ranking is stable
+    6. Repeat from 2 with new ranks until ranking is stable
 
     If transformations are symmetric, they should have the same rank
 
@@ -273,11 +280,13 @@ def assign_transformation_environments(topology):
 
     while True:
 
+        # Calculate the multiples of primes around each transformation to
+        # create next_rank
         for c, e in enumerate(transformations):
 
             current_invariant = 1.0
 
-            # used by
+            # requires
             for entity in topology.transformations[e].requires:
                 for r in topology.entities[entity].used_by:
                     if r != e:
@@ -285,7 +294,7 @@ def assign_transformation_environments(topology):
                 for r in topology.entities[entity].created_by:
                     current_invariant *= prime_rank[transformations.index(r)]
 
-            # created by
+            # creates
             for entity in topology.transformations[e].creates:
                 for r in topology.entities[entity].used_by:
                     current_invariant *= prime_rank[transformations.index(r)]
@@ -295,13 +304,19 @@ def assign_transformation_environments(topology):
 
             next_rank[c] = current_invariant
 
+        # Generate a prime ranking for the new_ranking
         new_prime_rank = prime_ranking(next_rank)
 
+        # Update the previous ordering with that provided by the latest round
+        # of prime multiples
         updated_rank = two_level_ranking(current_rank, new_prime_rank)
 
-        test = [(x, y) for x, y in zip(updated_rank, current_rank)]
+        # Basis for test if the while loop should halt
+        test = [x == y for x, y in zip(updated_rank, current_rank)]
 
+        # Update current ranking
         current_rank = [x for x in updated_rank]
+        prime_rank = prime_ranking(current_rank)
 
         if all(test):
             break
