@@ -1,15 +1,18 @@
 """
 Functions which test for things.
 """
+from typing import Union
 from DataBinder.Inspectors import patterns
 
 
-def is_prime(number, primes_list):
+def is_prime(number: int, primes_list: set[int]) -> Union[bool, int]:
     """
     Test if a number is prime.
+
     Parameters
     ----------
     number: int
+    primes_list: list[int]
 
     Returns
     -------
@@ -24,7 +27,7 @@ def is_prime(number, primes_list):
     return number
 
 
-def is_float(thing):
+def is_float(thing) -> bool:
     """
     Test if an thing (e.g. str) can be converted to a float.
 
@@ -44,7 +47,7 @@ def is_float(thing):
         return False
 
 
-def is_concentration_unit(text):
+def is_concentration_unit(text: str) -> bool:
     """
     Determine if the argument contains a concentration unit.
 
@@ -67,7 +70,7 @@ def is_concentration_unit(text):
     return False
 
 
-def is_flow_unit(text):
+def is_flow_unit(text: str) -> bool:
     """
     Determine if the argument contains a flow rate unit.
 
@@ -90,7 +93,7 @@ def is_flow_unit(text):
     return False
 
 
-def is_time_unit(text):
+def is_time_unit(text: str) -> bool:
     """
     Determine if the argument contains a concentration unit.
 

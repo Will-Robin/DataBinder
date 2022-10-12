@@ -1,7 +1,9 @@
 import re
-from DataBinder.Classes import Constant
 from DataBinder.Classes import Input
 from DataBinder.Classes import Output
+from DataBinder.Classes import Constant
+from DataBinder.Classes import Topology
+from DataBinder.Classes import DataContainer
 from DataBinder.Inspectors import patterns
 from DataBinder.Inspectors import test_for
 
@@ -10,7 +12,7 @@ from DataBinder.Inspectors import test_for
 reserved_names = ["inflow", "outflow"]
 
 
-def validate(data, topology):
+def validate(data: DataContainer, topology: Topology) -> list[str]:
     """
     Check the data and topology for compatibility, omissions in data, etc.
     Parameters
@@ -58,7 +60,7 @@ def validate(data, topology):
     return error_report
 
 
-def bind_data_topology(data, topology):
+def bind_data_topology(data: DataContainer, topology: Topology) -> Topology:
     """
     Bind data and topology together into a model.
 
@@ -77,29 +79,29 @@ def bind_data_topology(data, topology):
     # Scan for flow inputs
     inflow_register = []
     for entity in topology.entities:
-        for c in data.conditions:
-            token = patterns.token_pattern.findall(c.id)[0]
+        for array_c in data.array_conditions:
+            token = patterns.token_pattern.findall(array_c.id)[0]
             if token == entity:
-                if test_for.is_flow_unit(c.unit):
+                if test_for.is_flow_unit(array_c.unit):
                     # Keep track of inflows
                     inflow_register.append(entity)
 
     # Scan for input concentrations
     input_counter = 1
     for entity in inflow_register:
-        for c in data.conditions:
-            token = patterns.token_pattern.findall(c.id)[0]
-            if token == entity and test_for.is_concentration_unit(c.unit):
+        for value_c in data.value_conditions:
+            token = patterns.token_pattern.findall(value_c.id)[0]
+            if token == entity and test_for.is_concentration_unit(value_c.unit):
 
                 # Create a new token for the input source
-                flow_token = f"{c.id}_flow"
+                flow_token = f"{value_c.id}_flow"
                 input_counter += 1
 
                 # Create a new token for the input
                 input_token = f"{flow_token}>>{entity}"
 
                 # Get the concentration value
-                value = c.value
+                value = value_c.value
 
                 # Create a constant to be combined with an input
                 flow_entity = Constant(flow_token, value)

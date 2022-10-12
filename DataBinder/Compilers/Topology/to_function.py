@@ -1,10 +1,11 @@
+from DataBinder.Classes import Topology
 from .equation_system import write_equations
 
 
 TAB_SPACES = "    "
 
 
-def to_function(topology, unwrap_constants=False):
+def to_function(topology: Topology, unwrap_constants: bool = False) -> str:
     """
     Create a python function from a topology.
 

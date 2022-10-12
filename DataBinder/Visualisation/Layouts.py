@@ -2,8 +2,10 @@
 Generate layouts for topologies using Graphviz.
 """
 import json
+import DataBinder
 
 try:
+    import graphviz
     from graphviz import Digraph
 except ImportError:
     print(
@@ -11,7 +13,7 @@ except ImportError:
     )
 
 
-def create_edges(container, graph):
+def create_edges(container: dict, graph: graphviz.Digraph):
     """
     container: dict()
     graph: graphviz.Digraph
@@ -32,7 +34,9 @@ def create_edges(container, graph):
     return graph
 
 
-def generate_topology_layout(topology, algorithm="fdp"):
+def generate_topology_layout(
+    topology: DataBinder.Classes.Topology, algorithm: str = "fdp"
+) -> dict[str, list[float]]:
     """
     Uses graphviz to generate a layout from a Topology.
 

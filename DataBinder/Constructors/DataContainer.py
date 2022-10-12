@@ -2,6 +2,7 @@
 Constructors for a DataContainer object.
 """
 from pathlib import Path
+from typing import Union, Any
 
 from DataBinder.Classes import DataContainer
 from DataBinder.Classes import ConditionValue
@@ -10,7 +11,7 @@ from DataBinder.Inspectors import patterns
 from DataBinder.Inspectors import test_for
 
 
-def process_lines(text):
+def process_lines(text: str) -> list[list[Any]]:
     """
     Convert a text block into a list.
 
@@ -20,7 +21,7 @@ def process_lines(text):
 
     Returns
     -------
-    output: list[list[str]]
+    output: list[list]
     """
 
     lines = text.split("\n")
@@ -32,20 +33,20 @@ def process_lines(text):
         if len(contents) == 0:
             continue
 
-        values = []
+        str_values = []
+        float_values = []
         for c in contents:
             if test_for.is_float(c):
-                val = float(c)
-                values.append(val)
+                float_values.append(float(c))
             else:
-                values.append(c)
+                str_values.append(c)
 
-        output.append(values)
+        output.append(str_values + float_values)
 
     return output
 
 
-def parse_element(element):
+def parse_element(element: list[Any]) -> tuple[str, list[float], str]:
     """
 
     Parameters
@@ -64,7 +65,7 @@ def parse_element(element):
     return iden[0], value, unit[0]
 
 
-def from_string(text):
+def from_string(text: str) -> DataContainer:
     """
     Create a DataContainer from a string.
 
@@ -106,7 +107,8 @@ def from_string(text):
     exp_code = exp_code_text[0]
 
     # Parse conditions
-    conditions = []
+    array_conditions = []
+    value_conditions = []
     for block in conditions_text:
         condition_lines = process_lines(block)
         for element in condition_lines:
@@ -114,15 +116,13 @@ def from_string(text):
             iden, value, unit = parse_element(element)
 
             if len(element) > 2:
-                condition = ConditionArray(iden, value, unit)
+                array_conditions.append(ConditionArray(iden, value, unit))
             else:
-                condition = ConditionValue(iden, value[0], unit)
-
-            conditions.append(condition)
+                value_conditions.append(ConditionValue(iden, value[0], unit))
 
     # Parse data
-    series_data = dict()
-    data = dict()
+    series_data: dict = {}
+    data: dict = {}
     for block in data_text:
         data_lines = process_lines(block)
         transpose_lines = [list(i) for i in zip(*data_lines)]
@@ -133,12 +133,12 @@ def from_string(text):
             data[element[0]] = element[1:]
 
     # Parse data errors
-    errors = dict()
+    errors: dict = {}
     for block in error_text:
         error_lines = process_lines(block)
         transpose_lines = [list(i) for i in zip(*error_lines)]
         for element in transpose_lines[1:]:
-            error[element[0]] = element[1:]
+            errors[element[0]] = element[1:]
 
     # Get the series unit
     ser_unit = list(series_data)[0]
@@ -148,7 +148,8 @@ def from_string(text):
 
     data_container.filename = ""
     data_container.experiment_code = exp_code
-    data_container.conditions = conditions
+    data_container.value_conditions = value_conditions
+    data_container.array_conditions = array_conditions
     data_container.series_values = series_data[ser_unit]
     data_container.series_unit = ser_unit
     data_container.data = data
@@ -157,7 +158,7 @@ def from_string(text):
     return data_container
 
 
-def from_csv(filename):
+def from_csv(filename: str) -> DataContainer:
     """
     Load a DataContainer from a structured .csv file.
 

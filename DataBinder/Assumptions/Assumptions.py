@@ -1,4 +1,7 @@
-def pre_equilibrium(topology, transformation):
+from DataBinder.Classes import Topology
+
+
+def pre_equilibrium(topology: Topology, transformation: str) -> Topology:
     """
     Applies a pre-equilibrium approximation to a transformation.
 
@@ -55,7 +58,8 @@ def pre_equilibrium(topology, transformation):
     # TODO
     return topology
 
-def pseudo_first_order(topology, entity):
+
+def pseudo_first_order(topology: Topology, entity: str):
     """
     Apply a pseudo first-order approximation for all transformations in a
     topology containing the entity specified by the entity token.
@@ -84,6 +88,7 @@ def pseudo_first_order(topology, entity):
     """
     # TODO
     return topology
+
 
 def pseudo_first_order_targeted(topology, transformation, entity):
     """

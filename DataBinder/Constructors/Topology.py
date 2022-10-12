@@ -1,11 +1,12 @@
 from pathlib import Path
 
-from DataBinder.Classes import Topology
+import DataBinder
 from DataBinder.Classes import Entity
+from DataBinder.Classes import Topology
 from DataBinder.Classes import Transformation
 
 
-def from_string(text):
+def from_string(text: str) -> Topology:
     """
     Create a topology from a string of transformation tokens separatad by
     newlines.
@@ -23,8 +24,8 @@ def from_string(text):
     transform_strings = [x for x in text.split("\n") if x != ""]
 
     topology = Topology()
-    for transform in transform_strings:
-        sides = transform.split(">>")
+    for transf in transform_strings:
+        sides = transf.split(">>")
         LHS = sides[0]
         RHS = sides[1]
 
@@ -34,7 +35,7 @@ def from_string(text):
         [topology.add_entity(Entity(i)) for i in inputs]
         [topology.add_entity(Entity(o)) for o in outputs]
 
-        transform = Transformation(transform)
+        transform: Transformation = Transformation(transf)
         transform.requires = inputs
         transform.creates = outputs
 
@@ -43,7 +44,7 @@ def from_string(text):
     return topology
 
 
-def from_text(filename):
+def from_text(filename: str) -> Topology:
     """
     Load a Topology structure from a file containing transformations.
 

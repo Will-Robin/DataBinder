@@ -1,4 +1,7 @@
-def write_equations(topology, unwrap_constants=False):
+from DataBinder.Classes import Topology
+
+
+def write_equations(topology: Topology, unwrap_constants: bool = False) -> str:
     """
     Create a system of equations from a topology
 

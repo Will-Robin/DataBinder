@@ -3,7 +3,7 @@ class Entity:
     An individual unit in a structure.
     """
 
-    def __init__(self, iden):
+    def __init__(self, iden: str):
         """
         Attributes
         ----------
@@ -19,9 +19,9 @@ class Entity:
             entity in a transformation.
         """
 
-        self.id = iden
-        self.created_by = []
-        self.used_by = []
+        self.id: str = iden
+        self.created_by: list = []
+        self.used_by: list = []
 
 
 class Constant(Entity):
@@ -31,7 +31,7 @@ class Constant(Entity):
     An alias for Entity, emphasising that it is derived from data.
     """
 
-    def __init__(self, iden, value):
+    def __init__(self, iden: str, value: float):
         super().__init__(iden)
         self.value = value
 
@@ -41,7 +41,7 @@ class Transformation:
     A transformation describes the conversion between entities.
     """
 
-    def __init__(self, iden):
+    def __init__(self, iden: str):
         """
         Attributes
         ----------
@@ -57,9 +57,9 @@ class Transformation:
             transformation.
         """
 
-        self.id = iden
-        self.requires = []
-        self.creates = []
+        self.id: str = iden
+        self.requires: list = []
+        self.creates: list = []
 
 
 class Input(Transformation):
@@ -105,17 +105,17 @@ class Topology:
             - connects an entity to a constant.
         """
 
-        self.entities = dict()
-        self.transformations = dict()
-        self.constants = dict()
-        self.inputs = dict()
-        self.outputs = dict()
+        self.entities: dict = {}
+        self.transformations: dict = {}
+        self.constants: dict = {}
+        self.inputs: dict = {}
+        self.outputs: dict = {}
 
-    def add_entity(self, addition):
+    def add_entity(self, addition: Entity):
         if addition.id not in self.entities:
             self.entities[addition.id] = addition
 
-    def add_transformation(self, addition):
+    def add_transformation(self, addition: Transformation):
         if addition.id not in self.transformations:
             for requirement in addition.requires:
                 self.add_entity(Entity(requirement))
@@ -127,13 +127,13 @@ class Topology:
 
             self.transformations[addition.id] = addition
 
-    def add_constant(self, cons):
+    def add_constant(self, cons: Constant):
         if cons.id not in self.constants:
             self.constants[cons.id] = cons
         elif self.constants[cons.id].value == 0.0:
             self.constants[cons.id].value = cons.value
 
-    def add_input(self, inp):
+    def add_input(self, inp: Input):
         if inp.id not in self.inputs:
             for requirement in inp.requires:
                 self.add_constant(Constant(requirement, 0.0))
@@ -145,7 +145,7 @@ class Topology:
 
             self.inputs[inp.id] = inp
 
-    def add_output(self, output):
+    def add_output(self, output: Output):
         if output.id not in self.outputs:
             for requirement in output.requires:
                 self.add_entity(Entity(requirement))

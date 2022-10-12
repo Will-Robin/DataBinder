@@ -1,17 +1,17 @@
 """
 Structures encapsulating data.
 """
-from .DataContainer import DataContainer
+from .data_container import DataContainer
 
-from .Topology import Topology
+from .topology_components import Topology
 
-from .Topology import Entity
-from .Topology import Constant
+from .topology_components import Entity
+from .topology_components import Constant
 
-from .Topology import Transformation
-from .Topology import Input
-from .Topology import Output
+from .topology_components import Transformation
+from .topology_components import Input
+from .topology_components import Output
 
-from .Condition import Condition
-from .Condition import ConditionValue
-from .Condition import ConditionArray
+from .conditions import Condition
+from .conditions import ConditionValue
+from .conditions import ConditionArray

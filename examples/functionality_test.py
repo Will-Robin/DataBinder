@@ -21,7 +21,7 @@ topology_container = topol.from_text(topology_file)
 messages = data_topology.validate(data_container, topology_container)
 if len(messages) > 0:
     print(f"# Found {len(messages)} issue(s):")
-    for c,m in enumerate(messages, 1):
+    for c, m in enumerate(messages, 1):
         print(f"# {c}. {m}")
 print()
 

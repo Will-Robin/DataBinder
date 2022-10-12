@@ -12,5 +12,5 @@ class Model:
         equations:
         """
 
-        self.entities = dict()
-        self.equations = ""
+        self.entities: dict = {}
+        self.equations: str = ""

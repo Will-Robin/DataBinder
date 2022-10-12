@@ -1,7 +1,8 @@
+from DataBinder.Classes import Topology
 from DataBinder.Inspectors import test_for
 
 
-def generate_primes(num):
+def generate_primes(num: int) -> list[int]:
     """
     Generate the first `num` prime numbers.
 
@@ -28,7 +29,7 @@ def generate_primes(num):
         i += 1
 
 
-def rank_list(a_list):
+def rank_list(a_list: list[int]) -> list[int]:
     """
     Rank a list including duplicates.
 
@@ -52,7 +53,7 @@ def rank_list(a_list):
     return ranking
 
 
-def prime_ranking(ranking):
+def prime_ranking(ranking: list[int]) -> list[int]:
     """
     Map a ranking to prime numbers.
 
@@ -82,7 +83,7 @@ def prime_ranking(ranking):
     return prime_ranking
 
 
-def two_level_ranking(list_1, list_2):
+def two_level_ranking(list_1: list[int], list_2: list[int]) -> list[int]:
     """
     Rank by list_1 then list_2.
 
@@ -107,7 +108,7 @@ def two_level_ranking(list_1, list_2):
     return ranking
 
 
-def assign_entity_environments(topology):
+def assign_entity_environments(topology: Topology) -> dict[str, int]:
     """
     Assigning each Entity an environment based on the
     CANGEN algorithm.
@@ -167,8 +168,8 @@ def assign_entity_environments(topology):
     # rank invariants
     prime_rank = prime_ranking(initial_invariants)
     current_rank = rank_list(prime_rank)
-    updated_rank = [0.0 for _ in current_rank]
-    next_rank = [0.0 for _ in current_rank]
+    updated_rank = [0 for _ in current_rank]
+    next_rank = [0 for _ in current_rank]
 
     while True:
 
@@ -176,7 +177,7 @@ def assign_entity_environments(topology):
         # next_rank
         for c, e in enumerate(entities):
 
-            current_invariant = 1.0
+            current_invariant = 1
 
             # used by
             for transform in topology.entities[e].used_by:
@@ -194,7 +195,7 @@ def assign_entity_environments(topology):
                     if r != e:
                         current_invariant *= prime_rank[entities.index(r)]
 
-            next_rank[c] = current_invariant
+            next_rank[c] = int(current_invariant)
 
         # Generate a prime ranking for the new_ranking
         new_prime_rank = prime_ranking(next_rank)
@@ -215,7 +216,9 @@ def assign_entity_environments(topology):
     return {e: x for e, x in zip(entities, current_rank)}
 
 
-def assign_transformation_environments(topology):
+def assign_transformation_environments(
+    topology: Topology,
+) -> dict[str, int]:
     """
     Assigning each Tranformation an environment based on the
     CANGEN algorithm.
@@ -275,8 +278,8 @@ def assign_transformation_environments(topology):
     # rank invariants
     prime_rank = prime_ranking(initial_invariants)
     current_rank = rank_list(prime_rank)
-    updated_rank = [0.0 for _ in current_rank]
-    next_rank = [0.0 for _ in current_rank]
+    updated_rank = [0 for _ in current_rank]
+    next_rank = [0 for _ in current_rank]
 
     while True:
 
@@ -284,7 +287,7 @@ def assign_transformation_environments(topology):
         # create next_rank
         for c, e in enumerate(transformations):
 
-            current_invariant = 1.0
+            current_invariant = 1
 
             # requires
             for entity in topology.transformations[e].requires:
