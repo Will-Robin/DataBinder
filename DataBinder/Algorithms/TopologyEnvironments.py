@@ -195,7 +195,7 @@ def assign_entity_environments(topology: Topology) -> dict[str, int]:
                     if r != e:
                         current_invariant *= prime_rank[entities.index(r)]
 
-            next_rank[c] = int(current_invariant)
+            next_rank[c] = current_invariant
 
         # Generate a prime ranking for the new_ranking
         new_prime_rank = prime_ranking(next_rank)
