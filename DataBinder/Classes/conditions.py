@@ -11,8 +11,8 @@ class Condition:
         unit: str
         """
 
-        self.id = iden
-        self.unit = unit
+        self.id: str = iden
+        self.unit: str = unit
 
 
 class ConditionValue(Condition):
@@ -30,7 +30,7 @@ class ConditionValue(Condition):
         """
         super().__init__(iden, unit)
 
-        self.value = value
+        self.value: float = value
 
 
 class ConditionArray(Condition):
@@ -48,4 +48,4 @@ class ConditionArray(Condition):
         """
         super().__init__(iden, unit)
 
-        self.value = value
+        self.value: list[float] = value

@@ -33,7 +33,7 @@ class Constant(Entity):
 
     def __init__(self, iden: str, value: float):
         super().__init__(iden)
-        self.value = value
+        self.value: float = value
 
 
 class Transformation:
