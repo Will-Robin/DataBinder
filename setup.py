@@ -6,4 +6,14 @@ setup(
     author="William E. Robinson",
     packages=["DataBinder"],
     install_requires=[],
+    extras_require={
+        "dev": [
+            "pdoc",
+            "mypy",
+            "black",
+        ],
+        "vis": [
+            "graphviz",
+        ],
+    },
 )
