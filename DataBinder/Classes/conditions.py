@@ -1,3 +1,8 @@
+"""
+Structures holding conditional data.
+"""
+
+
 class Condition:
     """
     A structure containing condition information.

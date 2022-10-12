@@ -1,6 +1,8 @@
+"""
+For loading Topology structures from files and strings.
+"""
 from pathlib import Path
 
-import DataBinder
 from DataBinder.Classes import Entity
 from DataBinder.Classes import Topology
 from DataBinder.Classes import Transformation

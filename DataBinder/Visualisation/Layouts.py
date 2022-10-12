@@ -2,14 +2,16 @@
 Generate layouts for topologies using Graphviz.
 """
 import json
-import DataBinder
+from DataBinder.Classes import Topology
 
 try:
     import graphviz
     from graphviz import Digraph
 except ImportError:
     print(
-        "\033[1m\033[91mImportError: graphviz not installed, DataBinder.Visualisation module will crash!\033[0m"
+        """\033[1m\033[91m
+ImportError: graphviz not installed, DataBinder.Visualisation module will crash!
+\033[0m"""
     )
 
 
@@ -35,7 +37,7 @@ def create_edges(container: dict, graph: graphviz.Digraph):
 
 
 def generate_topology_layout(
-    topology: DataBinder.Classes.Topology, algorithm: str = "fdp"
+    topology: Topology, algorithm: str = "fdp"
 ) -> dict[str, list[float]]:
     """
     Uses graphviz to generate a layout from a Topology.

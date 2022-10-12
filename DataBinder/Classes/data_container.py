@@ -1,4 +1,6 @@
-from typing import Union, List
+"""
+A structure containing data.
+"""
 from .conditions import ConditionValue, ConditionArray
 
 
@@ -27,8 +29,8 @@ class DataContainer:
 
         self.filename: str = "not specified"
         self.experiment_code: str = "not specified"
-        self.value_conditions: List[ConditionValue] = []
-        self.array_conditions: List[ConditionArray] = []
+        self.value_conditions: list[ConditionValue] = []
+        self.array_conditions: list[ConditionArray] = []
         self.series_values: list = []
         self.series_unit: str = "not specified"
         self.data: dict = {}

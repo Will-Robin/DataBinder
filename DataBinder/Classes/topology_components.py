@@ -1,3 +1,8 @@
+"""
+The Topology structure and its components.
+"""
+
+
 class Entity:
     """
     An individual unit in a structure.
@@ -112,10 +117,34 @@ class Topology:
         self.outputs: dict = {}
 
     def add_entity(self, addition: Entity):
+        """
+        Add an entity to the topology.
+
+        Parameters
+        ----------
+        addition: DataBinder.Classes.Entity
+
+        Returns
+        -------
+        None
+        """
+
         if addition.id not in self.entities:
             self.entities[addition.id] = addition
 
     def add_transformation(self, addition: Transformation):
+        """
+        Add a transformation to the topology.
+
+        Parameters
+        ----------
+        addition: DataBinder.Classes.Transformation
+
+        Returns
+        -------
+        None
+        """
+
         if addition.id not in self.transformations:
             for requirement in addition.requires:
                 self.add_entity(Entity(requirement))
@@ -128,12 +157,36 @@ class Topology:
             self.transformations[addition.id] = addition
 
     def add_constant(self, cons: Constant):
+        """
+        Add a constant to the topology.
+
+        Parameters
+        ----------
+        cons: DataBinder.Classes.Constant
+
+        Returns
+        -------
+        None
+        """
+
         if cons.id not in self.constants:
             self.constants[cons.id] = cons
         elif self.constants[cons.id].value == 0.0:
             self.constants[cons.id].value = cons.value
 
     def add_input(self, inp: Input):
+        """
+        Add an input to the topology.
+
+        Parameters
+        ----------
+        inp: DataBinder.Classes.Input
+
+        Returns
+        -------
+        None
+        """
+
         if inp.id not in self.inputs:
             for requirement in inp.requires:
                 self.add_constant(Constant(requirement, 0.0))
@@ -146,6 +199,18 @@ class Topology:
             self.inputs[inp.id] = inp
 
     def add_output(self, output: Output):
+        """
+        Add an output to the topology.
+
+        Parameters
+        ----------
+        inp: DataBinder.Classes.Output
+
+        Returns
+        -------
+        None
+        """
+
         if output.id not in self.outputs:
             for requirement in output.requires:
                 self.add_entity(Entity(requirement))

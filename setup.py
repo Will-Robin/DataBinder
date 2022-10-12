@@ -11,6 +11,7 @@ setup(
             "pdoc",
             "mypy",
             "black",
+            "pylint",
         ],
         "vis": [
             "graphviz",

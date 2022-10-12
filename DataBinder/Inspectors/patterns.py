@@ -1,7 +1,7 @@
 import re
 
 # For parsing transformation lists
-token_pattern: re.Pattern = re.compile(f"([=@()A-Za-z0-9\[\]-]*)")
+token_pattern: re.Pattern = re.compile(r"([=@()A-Za-z0-9\[\]-]*)")
 
 # For parsing data
 exp_code_pattern: re.Pattern = re.compile(r"^Dataset,([A-Za-z0-9]*)")

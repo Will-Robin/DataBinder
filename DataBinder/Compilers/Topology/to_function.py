@@ -1,3 +1,6 @@
+"""
+Convert a topology to a python function.
+"""
 from DataBinder.Classes import Topology
 from .equation_system import write_equations
 

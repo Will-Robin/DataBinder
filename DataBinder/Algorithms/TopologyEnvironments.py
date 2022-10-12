@@ -1,3 +1,6 @@
+"""
+For finding environments in topologies.
+"""
 from DataBinder.Classes import Topology
 from DataBinder.Inspectors import test_for
 
@@ -63,7 +66,7 @@ def prime_ranking(ranking: list[int]) -> list[int]:
 
     Returns
     -------
-    prime_ranking: list[int]
+    rank_in_primes: list[int]
     """
 
     unique_ranks = []
@@ -78,9 +81,9 @@ def prime_ranking(ranking: list[int]) -> list[int]:
 
     indices = [sorted(unique_ranks).index(l) for l in ranking]
 
-    prime_ranking = [prime_numbers[i] for i in indices]
+    rank_in_primes = [prime_numbers[i] for i in indices]
 
-    return prime_ranking
+    return rank_in_primes
 
 
 def two_level_ranking(list_1: list[int], list_2: list[int]) -> list[int]:

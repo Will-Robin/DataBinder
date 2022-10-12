@@ -1,0 +1,9 @@
+[MAIN]
+
+disable = 
+    too-few-public-methods,
+    too-many-instance-attributes,
+    too-many-locals,
+    anomalous-backslash-in-string,
+    invalid-name,
+    unnecessary-comprehension,
