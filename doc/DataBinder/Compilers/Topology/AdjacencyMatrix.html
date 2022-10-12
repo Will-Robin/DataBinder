@@ -49,54 +49,59 @@
                     <h1 class="modulename">
 <a href="./../../../DataBinder.html">DataBinder</a><wbr>.<a href="./../../Compilers.html">Compilers</a><wbr>.<a href="./../Topology.html">Topology</a><wbr>.AdjacencyMatrix    </h1>
 
-                
+                        <div class="docstring"><p>Convert a topology to an adjacency matrix.</p>
+</div>
+
                         <input id="AdjacencyMatrix-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 
                         <label class="view-source-button" for="AdjacencyMatrix-view-source"><span>View Source</span></label>
 
-                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#-1"><span class="linenos"> 1</span></a><span class="kn">from</span> <span class="nn">DataBinder.Classes</span> <span class="kn">import</span> <span class="n">Topology</span>
-</span><span id="L-2"><a href="#-2"><span class="linenos"> 2</span></a>
-</span><span id="L-3"><a href="#-3"><span class="linenos"> 3</span></a>
-</span><span id="L-4"><a href="#-4"><span class="linenos"> 4</span></a><span class="k">def</span> <span class="nf">write_adjacency_matrix</span><span class="p">(</span><span class="n">topology</span><span class="p">:</span> <span class="n">Topology</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
-</span><span id="L-5"><a href="#-5"><span class="linenos"> 5</span></a>    <span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-6"><a href="#-6"><span class="linenos"> 6</span></a><span class="sd">    Create an adjacency matrix from a topology.</span>
-</span><span id="L-7"><a href="#-7"><span class="linenos"> 7</span></a>
-</span><span id="L-8"><a href="#-8"><span class="linenos"> 8</span></a><span class="sd">    Prototype: transformations are edges, a &#39;1&#39; indicates an edge between two</span>
-</span><span id="L-9"><a href="#-9"><span class="linenos"> 9</span></a><span class="sd">    entities. This does not cover phenonmena such as bimolecular reactions (the</span>
-</span><span id="L-10"><a href="#-10"><span class="linenos">10</span></a><span class="sd">    presence of an edge is dependent on the presence of another entity).</span>
-</span><span id="L-11"><a href="#-11"><span class="linenos">11</span></a>
-</span><span id="L-12"><a href="#-12"><span class="linenos">12</span></a><span class="sd">    - A value of 1 in A_ij_ means an edge from i to j</span>
-</span><span id="L-13"><a href="#-13"><span class="linenos">13</span></a>
-</span><span id="L-14"><a href="#-14"><span class="linenos">14</span></a><span class="sd">    Parameters</span>
-</span><span id="L-15"><a href="#-15"><span class="linenos">15</span></a><span class="sd">    ----------</span>
-</span><span id="L-16"><a href="#-16"><span class="linenos">16</span></a><span class="sd">    topology: DataBinder.Classes.Topology</span>
-</span><span id="L-17"><a href="#-17"><span class="linenos">17</span></a><span class="sd">        Topology to be converted.</span>
-</span><span id="L-18"><a href="#-18"><span class="linenos">18</span></a>
-</span><span id="L-19"><a href="#-19"><span class="linenos">19</span></a><span class="sd">    Returns</span>
-</span><span id="L-20"><a href="#-20"><span class="linenos">20</span></a><span class="sd">    -------</span>
-</span><span id="L-21"><a href="#-21"><span class="linenos">21</span></a><span class="sd">    adjacency_matrix: list[list]</span>
-</span><span id="L-22"><a href="#-22"><span class="linenos">22</span></a><span class="sd">        Adjacency matrix.</span>
-</span><span id="L-23"><a href="#-23"><span class="linenos">23</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-24"><a href="#-24"><span class="linenos">24</span></a>
-</span><span id="L-25"><a href="#-25"><span class="linenos">25</span></a>    <span class="n">combined_entities</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">entities</span> <span class="o">|</span> <span class="n">topology</span><span class="o">.</span><span class="n">constants</span>
-</span><span id="L-26"><a href="#-26"><span class="linenos">26</span></a>    <span class="n">combined_transformations</span> <span class="o">=</span> <span class="p">(</span>
-</span><span id="L-27"><a href="#-27"><span class="linenos">27</span></a>        <span class="n">topology</span><span class="o">.</span><span class="n">transformations</span> <span class="o">|</span> <span class="n">topology</span><span class="o">.</span><span class="n">inputs</span> <span class="o">|</span> <span class="n">topology</span><span class="o">.</span><span class="n">outputs</span>
-</span><span id="L-28"><a href="#-28"><span class="linenos">28</span></a>    <span class="p">)</span>
-</span><span id="L-29"><a href="#-29"><span class="linenos">29</span></a>
-</span><span id="L-30"><a href="#-30"><span class="linenos">30</span></a>    <span class="n">adjacency_matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">combined_entities</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">combined_entities</span><span class="p">]</span>
-</span><span id="L-31"><a href="#-31"><span class="linenos">31</span></a>
-</span><span id="L-32"><a href="#-32"><span class="linenos">32</span></a>    <span class="n">entity_indices</span> <span class="o">=</span> <span class="p">{</span><span class="n">iden</span><span class="p">:</span> <span class="n">c</span> <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">iden</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">combined_entities</span><span class="p">)}</span>
-</span><span id="L-33"><a href="#-33"><span class="linenos">33</span></a>
-</span><span id="L-34"><a href="#-34"><span class="linenos">34</span></a>    <span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">combined_entities</span><span class="p">:</span>
-</span><span id="L-35"><a href="#-35"><span class="linenos">35</span></a>        <span class="n">idx_1</span> <span class="o">=</span> <span class="n">entity_indices</span><span class="p">[</span><span class="n">entity</span><span class="p">]</span>
+                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#-1"><span class="linenos"> 1</span></a><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-2"><a href="#-2"><span class="linenos"> 2</span></a><span class="sd">Convert a topology to an adjacency matrix.</span>
+</span><span id="L-3"><a href="#-3"><span class="linenos"> 3</span></a><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-4"><a href="#-4"><span class="linenos"> 4</span></a><span class="kn">from</span> <span class="nn">DataBinder.Classes</span> <span class="kn">import</span> <span class="n">Topology</span>
+</span><span id="L-5"><a href="#-5"><span class="linenos"> 5</span></a>
+</span><span id="L-6"><a href="#-6"><span class="linenos"> 6</span></a>
+</span><span id="L-7"><a href="#-7"><span class="linenos"> 7</span></a><span class="k">def</span> <span class="nf">write_adjacency_matrix</span><span class="p">(</span><span class="n">topology</span><span class="p">:</span> <span class="n">Topology</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+</span><span id="L-8"><a href="#-8"><span class="linenos"> 8</span></a>    <span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-9"><a href="#-9"><span class="linenos"> 9</span></a><span class="sd">    Create an adjacency matrix from a topology.</span>
+</span><span id="L-10"><a href="#-10"><span class="linenos">10</span></a>
+</span><span id="L-11"><a href="#-11"><span class="linenos">11</span></a><span class="sd">    Prototype: transformations are edges, a &#39;1&#39; indicates an edge between two</span>
+</span><span id="L-12"><a href="#-12"><span class="linenos">12</span></a><span class="sd">    entities. This does not cover phenonmena such as bimolecular reactions (the</span>
+</span><span id="L-13"><a href="#-13"><span class="linenos">13</span></a><span class="sd">    presence of an edge is dependent on the presence of another entity).</span>
+</span><span id="L-14"><a href="#-14"><span class="linenos">14</span></a>
+</span><span id="L-15"><a href="#-15"><span class="linenos">15</span></a><span class="sd">    - A value of 1 in A_ij_ means an edge from i to j</span>
+</span><span id="L-16"><a href="#-16"><span class="linenos">16</span></a>
+</span><span id="L-17"><a href="#-17"><span class="linenos">17</span></a><span class="sd">    Parameters</span>
+</span><span id="L-18"><a href="#-18"><span class="linenos">18</span></a><span class="sd">    ----------</span>
+</span><span id="L-19"><a href="#-19"><span class="linenos">19</span></a><span class="sd">    topology: DataBinder.Classes.Topology</span>
+</span><span id="L-20"><a href="#-20"><span class="linenos">20</span></a><span class="sd">        Topology to be converted.</span>
+</span><span id="L-21"><a href="#-21"><span class="linenos">21</span></a>
+</span><span id="L-22"><a href="#-22"><span class="linenos">22</span></a><span class="sd">    Returns</span>
+</span><span id="L-23"><a href="#-23"><span class="linenos">23</span></a><span class="sd">    -------</span>
+</span><span id="L-24"><a href="#-24"><span class="linenos">24</span></a><span class="sd">    adjacency_matrix: list[list]</span>
+</span><span id="L-25"><a href="#-25"><span class="linenos">25</span></a><span class="sd">        Adjacency matrix.</span>
+</span><span id="L-26"><a href="#-26"><span class="linenos">26</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-27"><a href="#-27"><span class="linenos">27</span></a>
+</span><span id="L-28"><a href="#-28"><span class="linenos">28</span></a>    <span class="n">combined_entities</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">entities</span> <span class="o">|</span> <span class="n">topology</span><span class="o">.</span><span class="n">constants</span>
+</span><span id="L-29"><a href="#-29"><span class="linenos">29</span></a>    <span class="n">combined_transformations</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="L-30"><a href="#-30"><span class="linenos">30</span></a>        <span class="n">topology</span><span class="o">.</span><span class="n">transformations</span> <span class="o">|</span> <span class="n">topology</span><span class="o">.</span><span class="n">inputs</span> <span class="o">|</span> <span class="n">topology</span><span class="o">.</span><span class="n">outputs</span>
+</span><span id="L-31"><a href="#-31"><span class="linenos">31</span></a>    <span class="p">)</span>
+</span><span id="L-32"><a href="#-32"><span class="linenos">32</span></a>
+</span><span id="L-33"><a href="#-33"><span class="linenos">33</span></a>    <span class="n">adjacency_matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">combined_entities</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">combined_entities</span><span class="p">]</span>
+</span><span id="L-34"><a href="#-34"><span class="linenos">34</span></a>
+</span><span id="L-35"><a href="#-35"><span class="linenos">35</span></a>    <span class="n">entity_indices</span> <span class="o">=</span> <span class="p">{</span><span class="n">iden</span><span class="p">:</span> <span class="n">c</span> <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">iden</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">combined_entities</span><span class="p">)}</span>
 </span><span id="L-36"><a href="#-36"><span class="linenos">36</span></a>
-</span><span id="L-37"><a href="#-37"><span class="linenos">37</span></a>        <span class="c1"># Trace forwards (1 in A_ij_ means an edge from i to j)</span>
-</span><span id="L-38"><a href="#-38"><span class="linenos">38</span></a>        <span class="k">for</span> <span class="n">transform</span> <span class="ow">in</span> <span class="n">combined_entities</span><span class="p">[</span><span class="n">entity</span><span class="p">]</span><span class="o">.</span><span class="n">used_by</span><span class="p">:</span>
-</span><span id="L-39"><a href="#-39"><span class="linenos">39</span></a>            <span class="k">for</span> <span class="n">creation</span> <span class="ow">in</span> <span class="n">combined_transformations</span><span class="p">[</span><span class="n">transform</span><span class="p">]</span><span class="o">.</span><span class="n">creates</span><span class="p">:</span>
-</span><span id="L-40"><a href="#-40"><span class="linenos">40</span></a>                <span class="n">idx_2</span> <span class="o">=</span> <span class="n">entity_indices</span><span class="p">[</span><span class="n">creation</span><span class="p">]</span>
-</span><span id="L-41"><a href="#-41"><span class="linenos">41</span></a>                <span class="n">adjacency_matrix</span><span class="p">[</span><span class="n">idx_1</span><span class="p">][</span><span class="n">idx_2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-</span><span id="L-42"><a href="#-42"><span class="linenos">42</span></a>
-</span><span id="L-43"><a href="#-43"><span class="linenos">43</span></a>    <span class="k">return</span> <span class="n">adjacency_matrix</span>
+</span><span id="L-37"><a href="#-37"><span class="linenos">37</span></a>    <span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">combined_entities</span><span class="p">:</span>
+</span><span id="L-38"><a href="#-38"><span class="linenos">38</span></a>        <span class="n">idx_1</span> <span class="o">=</span> <span class="n">entity_indices</span><span class="p">[</span><span class="n">entity</span><span class="p">]</span>
+</span><span id="L-39"><a href="#-39"><span class="linenos">39</span></a>
+</span><span id="L-40"><a href="#-40"><span class="linenos">40</span></a>        <span class="c1"># Trace forwards (1 in A_ij_ means an edge from i to j)</span>
+</span><span id="L-41"><a href="#-41"><span class="linenos">41</span></a>        <span class="k">for</span> <span class="n">transform</span> <span class="ow">in</span> <span class="n">combined_entities</span><span class="p">[</span><span class="n">entity</span><span class="p">]</span><span class="o">.</span><span class="n">used_by</span><span class="p">:</span>
+</span><span id="L-42"><a href="#-42"><span class="linenos">42</span></a>            <span class="k">for</span> <span class="n">creation</span> <span class="ow">in</span> <span class="n">combined_transformations</span><span class="p">[</span><span class="n">transform</span><span class="p">]</span><span class="o">.</span><span class="n">creates</span><span class="p">:</span>
+</span><span id="L-43"><a href="#-43"><span class="linenos">43</span></a>                <span class="n">idx_2</span> <span class="o">=</span> <span class="n">entity_indices</span><span class="p">[</span><span class="n">creation</span><span class="p">]</span>
+</span><span id="L-44"><a href="#-44"><span class="linenos">44</span></a>                <span class="n">adjacency_matrix</span><span class="p">[</span><span class="n">idx_1</span><span class="p">][</span><span class="n">idx_2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span id="L-45"><a href="#-45"><span class="linenos">45</span></a>
+</span><span id="L-46"><a href="#-46"><span class="linenos">46</span></a>    <span class="k">return</span> <span class="n">adjacency_matrix</span>
 </span></pre></div>
 
 
@@ -112,46 +117,46 @@
 
     </div>
     <a class="headerlink" href="#write_adjacency_matrix"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="write_adjacency_matrix-5"><a href="#-5"><span class="linenos"> 5</span></a><span class="k">def</span> <span class="nf">write_adjacency_matrix</span><span class="p">(</span><span class="n">topology</span><span class="p">:</span> <span class="n">Topology</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
-</span><span id="write_adjacency_matrix-6"><a href="#-6"><span class="linenos"> 6</span></a>    <span class="sd">&quot;&quot;&quot;</span>
-</span><span id="write_adjacency_matrix-7"><a href="#-7"><span class="linenos"> 7</span></a><span class="sd">    Create an adjacency matrix from a topology.</span>
-</span><span id="write_adjacency_matrix-8"><a href="#-8"><span class="linenos"> 8</span></a>
-</span><span id="write_adjacency_matrix-9"><a href="#-9"><span class="linenos"> 9</span></a><span class="sd">    Prototype: transformations are edges, a &#39;1&#39; indicates an edge between two</span>
-</span><span id="write_adjacency_matrix-10"><a href="#-10"><span class="linenos">10</span></a><span class="sd">    entities. This does not cover phenonmena such as bimolecular reactions (the</span>
-</span><span id="write_adjacency_matrix-11"><a href="#-11"><span class="linenos">11</span></a><span class="sd">    presence of an edge is dependent on the presence of another entity).</span>
-</span><span id="write_adjacency_matrix-12"><a href="#-12"><span class="linenos">12</span></a>
-</span><span id="write_adjacency_matrix-13"><a href="#-13"><span class="linenos">13</span></a><span class="sd">    - A value of 1 in A_ij_ means an edge from i to j</span>
-</span><span id="write_adjacency_matrix-14"><a href="#-14"><span class="linenos">14</span></a>
-</span><span id="write_adjacency_matrix-15"><a href="#-15"><span class="linenos">15</span></a><span class="sd">    Parameters</span>
-</span><span id="write_adjacency_matrix-16"><a href="#-16"><span class="linenos">16</span></a><span class="sd">    ----------</span>
-</span><span id="write_adjacency_matrix-17"><a href="#-17"><span class="linenos">17</span></a><span class="sd">    topology: DataBinder.Classes.Topology</span>
-</span><span id="write_adjacency_matrix-18"><a href="#-18"><span class="linenos">18</span></a><span class="sd">        Topology to be converted.</span>
-</span><span id="write_adjacency_matrix-19"><a href="#-19"><span class="linenos">19</span></a>
-</span><span id="write_adjacency_matrix-20"><a href="#-20"><span class="linenos">20</span></a><span class="sd">    Returns</span>
-</span><span id="write_adjacency_matrix-21"><a href="#-21"><span class="linenos">21</span></a><span class="sd">    -------</span>
-</span><span id="write_adjacency_matrix-22"><a href="#-22"><span class="linenos">22</span></a><span class="sd">    adjacency_matrix: list[list]</span>
-</span><span id="write_adjacency_matrix-23"><a href="#-23"><span class="linenos">23</span></a><span class="sd">        Adjacency matrix.</span>
-</span><span id="write_adjacency_matrix-24"><a href="#-24"><span class="linenos">24</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="write_adjacency_matrix-25"><a href="#-25"><span class="linenos">25</span></a>
-</span><span id="write_adjacency_matrix-26"><a href="#-26"><span class="linenos">26</span></a>    <span class="n">combined_entities</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">entities</span> <span class="o">|</span> <span class="n">topology</span><span class="o">.</span><span class="n">constants</span>
-</span><span id="write_adjacency_matrix-27"><a href="#-27"><span class="linenos">27</span></a>    <span class="n">combined_transformations</span> <span class="o">=</span> <span class="p">(</span>
-</span><span id="write_adjacency_matrix-28"><a href="#-28"><span class="linenos">28</span></a>        <span class="n">topology</span><span class="o">.</span><span class="n">transformations</span> <span class="o">|</span> <span class="n">topology</span><span class="o">.</span><span class="n">inputs</span> <span class="o">|</span> <span class="n">topology</span><span class="o">.</span><span class="n">outputs</span>
-</span><span id="write_adjacency_matrix-29"><a href="#-29"><span class="linenos">29</span></a>    <span class="p">)</span>
-</span><span id="write_adjacency_matrix-30"><a href="#-30"><span class="linenos">30</span></a>
-</span><span id="write_adjacency_matrix-31"><a href="#-31"><span class="linenos">31</span></a>    <span class="n">adjacency_matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">combined_entities</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">combined_entities</span><span class="p">]</span>
-</span><span id="write_adjacency_matrix-32"><a href="#-32"><span class="linenos">32</span></a>
-</span><span id="write_adjacency_matrix-33"><a href="#-33"><span class="linenos">33</span></a>    <span class="n">entity_indices</span> <span class="o">=</span> <span class="p">{</span><span class="n">iden</span><span class="p">:</span> <span class="n">c</span> <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">iden</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">combined_entities</span><span class="p">)}</span>
-</span><span id="write_adjacency_matrix-34"><a href="#-34"><span class="linenos">34</span></a>
-</span><span id="write_adjacency_matrix-35"><a href="#-35"><span class="linenos">35</span></a>    <span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">combined_entities</span><span class="p">:</span>
-</span><span id="write_adjacency_matrix-36"><a href="#-36"><span class="linenos">36</span></a>        <span class="n">idx_1</span> <span class="o">=</span> <span class="n">entity_indices</span><span class="p">[</span><span class="n">entity</span><span class="p">]</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="write_adjacency_matrix-8"><a href="#-8"><span class="linenos"> 8</span></a><span class="k">def</span> <span class="nf">write_adjacency_matrix</span><span class="p">(</span><span class="n">topology</span><span class="p">:</span> <span class="n">Topology</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+</span><span id="write_adjacency_matrix-9"><a href="#-9"><span class="linenos"> 9</span></a>    <span class="sd">&quot;&quot;&quot;</span>
+</span><span id="write_adjacency_matrix-10"><a href="#-10"><span class="linenos">10</span></a><span class="sd">    Create an adjacency matrix from a topology.</span>
+</span><span id="write_adjacency_matrix-11"><a href="#-11"><span class="linenos">11</span></a>
+</span><span id="write_adjacency_matrix-12"><a href="#-12"><span class="linenos">12</span></a><span class="sd">    Prototype: transformations are edges, a &#39;1&#39; indicates an edge between two</span>
+</span><span id="write_adjacency_matrix-13"><a href="#-13"><span class="linenos">13</span></a><span class="sd">    entities. This does not cover phenonmena such as bimolecular reactions (the</span>
+</span><span id="write_adjacency_matrix-14"><a href="#-14"><span class="linenos">14</span></a><span class="sd">    presence of an edge is dependent on the presence of another entity).</span>
+</span><span id="write_adjacency_matrix-15"><a href="#-15"><span class="linenos">15</span></a>
+</span><span id="write_adjacency_matrix-16"><a href="#-16"><span class="linenos">16</span></a><span class="sd">    - A value of 1 in A_ij_ means an edge from i to j</span>
+</span><span id="write_adjacency_matrix-17"><a href="#-17"><span class="linenos">17</span></a>
+</span><span id="write_adjacency_matrix-18"><a href="#-18"><span class="linenos">18</span></a><span class="sd">    Parameters</span>
+</span><span id="write_adjacency_matrix-19"><a href="#-19"><span class="linenos">19</span></a><span class="sd">    ----------</span>
+</span><span id="write_adjacency_matrix-20"><a href="#-20"><span class="linenos">20</span></a><span class="sd">    topology: DataBinder.Classes.Topology</span>
+</span><span id="write_adjacency_matrix-21"><a href="#-21"><span class="linenos">21</span></a><span class="sd">        Topology to be converted.</span>
+</span><span id="write_adjacency_matrix-22"><a href="#-22"><span class="linenos">22</span></a>
+</span><span id="write_adjacency_matrix-23"><a href="#-23"><span class="linenos">23</span></a><span class="sd">    Returns</span>
+</span><span id="write_adjacency_matrix-24"><a href="#-24"><span class="linenos">24</span></a><span class="sd">    -------</span>
+</span><span id="write_adjacency_matrix-25"><a href="#-25"><span class="linenos">25</span></a><span class="sd">    adjacency_matrix: list[list]</span>
+</span><span id="write_adjacency_matrix-26"><a href="#-26"><span class="linenos">26</span></a><span class="sd">        Adjacency matrix.</span>
+</span><span id="write_adjacency_matrix-27"><a href="#-27"><span class="linenos">27</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="write_adjacency_matrix-28"><a href="#-28"><span class="linenos">28</span></a>
+</span><span id="write_adjacency_matrix-29"><a href="#-29"><span class="linenos">29</span></a>    <span class="n">combined_entities</span> <span class="o">=</span> <span class="n">topology</span><span class="o">.</span><span class="n">entities</span> <span class="o">|</span> <span class="n">topology</span><span class="o">.</span><span class="n">constants</span>
+</span><span id="write_adjacency_matrix-30"><a href="#-30"><span class="linenos">30</span></a>    <span class="n">combined_transformations</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="write_adjacency_matrix-31"><a href="#-31"><span class="linenos">31</span></a>        <span class="n">topology</span><span class="o">.</span><span class="n">transformations</span> <span class="o">|</span> <span class="n">topology</span><span class="o">.</span><span class="n">inputs</span> <span class="o">|</span> <span class="n">topology</span><span class="o">.</span><span class="n">outputs</span>
+</span><span id="write_adjacency_matrix-32"><a href="#-32"><span class="linenos">32</span></a>    <span class="p">)</span>
+</span><span id="write_adjacency_matrix-33"><a href="#-33"><span class="linenos">33</span></a>
+</span><span id="write_adjacency_matrix-34"><a href="#-34"><span class="linenos">34</span></a>    <span class="n">adjacency_matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">combined_entities</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">combined_entities</span><span class="p">]</span>
+</span><span id="write_adjacency_matrix-35"><a href="#-35"><span class="linenos">35</span></a>
+</span><span id="write_adjacency_matrix-36"><a href="#-36"><span class="linenos">36</span></a>    <span class="n">entity_indices</span> <span class="o">=</span> <span class="p">{</span><span class="n">iden</span><span class="p">:</span> <span class="n">c</span> <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">iden</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">combined_entities</span><span class="p">)}</span>
 </span><span id="write_adjacency_matrix-37"><a href="#-37"><span class="linenos">37</span></a>
-</span><span id="write_adjacency_matrix-38"><a href="#-38"><span class="linenos">38</span></a>        <span class="c1"># Trace forwards (1 in A_ij_ means an edge from i to j)</span>
-</span><span id="write_adjacency_matrix-39"><a href="#-39"><span class="linenos">39</span></a>        <span class="k">for</span> <span class="n">transform</span> <span class="ow">in</span> <span class="n">combined_entities</span><span class="p">[</span><span class="n">entity</span><span class="p">]</span><span class="o">.</span><span class="n">used_by</span><span class="p">:</span>
-</span><span id="write_adjacency_matrix-40"><a href="#-40"><span class="linenos">40</span></a>            <span class="k">for</span> <span class="n">creation</span> <span class="ow">in</span> <span class="n">combined_transformations</span><span class="p">[</span><span class="n">transform</span><span class="p">]</span><span class="o">.</span><span class="n">creates</span><span class="p">:</span>
-</span><span id="write_adjacency_matrix-41"><a href="#-41"><span class="linenos">41</span></a>                <span class="n">idx_2</span> <span class="o">=</span> <span class="n">entity_indices</span><span class="p">[</span><span class="n">creation</span><span class="p">]</span>
-</span><span id="write_adjacency_matrix-42"><a href="#-42"><span class="linenos">42</span></a>                <span class="n">adjacency_matrix</span><span class="p">[</span><span class="n">idx_1</span><span class="p">][</span><span class="n">idx_2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-</span><span id="write_adjacency_matrix-43"><a href="#-43"><span class="linenos">43</span></a>
-</span><span id="write_adjacency_matrix-44"><a href="#-44"><span class="linenos">44</span></a>    <span class="k">return</span> <span class="n">adjacency_matrix</span>
+</span><span id="write_adjacency_matrix-38"><a href="#-38"><span class="linenos">38</span></a>    <span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">combined_entities</span><span class="p">:</span>
+</span><span id="write_adjacency_matrix-39"><a href="#-39"><span class="linenos">39</span></a>        <span class="n">idx_1</span> <span class="o">=</span> <span class="n">entity_indices</span><span class="p">[</span><span class="n">entity</span><span class="p">]</span>
+</span><span id="write_adjacency_matrix-40"><a href="#-40"><span class="linenos">40</span></a>
+</span><span id="write_adjacency_matrix-41"><a href="#-41"><span class="linenos">41</span></a>        <span class="c1"># Trace forwards (1 in A_ij_ means an edge from i to j)</span>
+</span><span id="write_adjacency_matrix-42"><a href="#-42"><span class="linenos">42</span></a>        <span class="k">for</span> <span class="n">transform</span> <span class="ow">in</span> <span class="n">combined_entities</span><span class="p">[</span><span class="n">entity</span><span class="p">]</span><span class="o">.</span><span class="n">used_by</span><span class="p">:</span>
+</span><span id="write_adjacency_matrix-43"><a href="#-43"><span class="linenos">43</span></a>            <span class="k">for</span> <span class="n">creation</span> <span class="ow">in</span> <span class="n">combined_transformations</span><span class="p">[</span><span class="n">transform</span><span class="p">]</span><span class="o">.</span><span class="n">creates</span><span class="p">:</span>
+</span><span id="write_adjacency_matrix-44"><a href="#-44"><span class="linenos">44</span></a>                <span class="n">idx_2</span> <span class="o">=</span> <span class="n">entity_indices</span><span class="p">[</span><span class="n">creation</span><span class="p">]</span>
+</span><span id="write_adjacency_matrix-45"><a href="#-45"><span class="linenos">45</span></a>                <span class="n">adjacency_matrix</span><span class="p">[</span><span class="n">idx_1</span><span class="p">][</span><span class="n">idx_2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span id="write_adjacency_matrix-46"><a href="#-46"><span class="linenos">46</span></a>
+</span><span id="write_adjacency_matrix-47"><a href="#-47"><span class="linenos">47</span></a>    <span class="k">return</span> <span class="n">adjacency_matrix</span>
 </span></pre></div>
 
 
