@@ -2,6 +2,7 @@
 Work in progress.
 """
 from DataBinder.Classes import Topology
+from DataBinder.Classes import Transformation
 
 
 def pre_equilibrium(topology: Topology, transformation: str) -> Topology:
@@ -14,7 +15,9 @@ def pre_equilibrium(topology: Topology, transformation: str) -> Topology:
       the combination of the removed entities.
 
     A ← B ←→ C → D
+
     E → B
+
     F → C
 
     After pre-equilibrium approximation:
@@ -25,9 +28,13 @@ def pre_equilibrium(topology: Topology, transformation: str) -> Topology:
     E and F both produce Z
 
     Z = B + C
+
     Z * constant → A
+
     Z * 1/constant → D
+
     E → Z
+
     F → Z
 
     >> Replacements with a additional constants. <<
@@ -39,8 +46,11 @@ def pre_equilibrium(topology: Topology, transformation: str) -> Topology:
     K = A*B/C*D
 
     A = K*C*D/B = K*(C*D/B)
+
     B = K*C*D/A = K*(C*D/A)
+
     C = A*B/K*D = 1/K*(A*B/D)
+
     D = A*B/K*C = 1/K*(A*B/C)
 
     Z = A + B + C + D
@@ -62,7 +72,7 @@ def pre_equilibrium(topology: Topology, transformation: str) -> Topology:
     return topology
 
 
-def pseudo_first_order(topology: Topology, entity: str):
+def pseudo_first_order_entity(topology: Topology, entity: str):
     """
     Apply a pseudo first-order approximation for all transformations in a
     topology containing the entity specified by the entity token.
@@ -89,11 +99,21 @@ def pseudo_first_order(topology: Topology, entity: str):
     topology: DataBinder.Classes.Topology
         Modified topology.
     """
-    # TODO
+
+    transforms = []
+    for transf in topology.transformations:
+        if entity in topology.transformations[transf].requires:
+            transforms.append(transf)
+
+    for t in transforms:
+        pseudo_first_order_transformation(topology, t, entity)
+
     return topology
 
 
-def pseudo_first_order_targeted(topology, transformation, entity):
+def pseudo_first_order_transformation(
+    topology: Topology, transformation: str, entity: str
+):
     """
     Apply a pseudo first-order approximation for specific transformation
     (specified by its token) in a topology containing the entity specified by
@@ -110,6 +130,8 @@ def pseudo_first_order_targeted(topology, transformation, entity):
 
     (or some variation of the above)
 
+    May need some kind of tag to remind that the assumption has been applied.
+
     Parameters
     ----------
     topology: DataBinder.Classes.Topology
@@ -121,5 +143,30 @@ def pseudo_first_order_targeted(topology, transformation, entity):
     topology: DataBinder.Classes.Topology
         Modified topology.
     """
-    # TODO
+
+    # Create a new transformation token
+    components = transformation.split(">>")
+    lhs = components[0].split(".")
+    rhs = components[1].split(".")
+
+    if entity in lhs:
+        lhs.remove(entity)
+    if entity in rhs:
+        rhs.remove(entity)
+
+    new_lhs = ".".join(lhs)
+    new_rhs = ".".join(rhs)
+    new_token = f"{new_lhs}>>{new_rhs}"
+
+    new_transf = Transformation(new_token)
+    new_transf.requires.extend(lhs)
+    new_transf.creates.extend(rhs)
+
+    # Remove the 'old' transformation from the topology
+    transf = topology.transformations[transformation]
+    topology.remove_transformation(transf)
+
+    # Add the new transformation
+    topology.add_transformation(new_transf)
+
     return topology

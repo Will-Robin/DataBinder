@@ -132,6 +132,36 @@ class Topology:
         if addition.id not in self.entities:
             self.entities[addition.id] = addition
 
+    def remove_entity(self, removal: Entity):
+        """
+        Remove an entity from the topology.
+
+        Parameters
+        ----------
+        removal: DataBinder.Classes.Entity
+
+        Returns
+        -------
+        None
+        """
+
+        token = removal.id
+        remove_transformations = []
+        # Remove the entity from associated transformations
+        for transf in self.entities[token].used_by:
+            self.transformations[transf].requires.remove(token)
+            if len(self.transformations[transf].requires) == 0:
+                remove_transformations.append(transf)
+        for transf in self.entities[token].created_by:
+            self.transformations[transf].creates.remove(token)
+            if len(self.transformations[transf].creates) == 0:
+                remove_transformations.append(transf)
+
+        for transf in remove_transformations:
+            self.remove_transformation(self.transformations[transf])
+
+        del self.entities[token]
+
     def add_transformation(self, addition: Transformation):
         """
         Add a transformation to the topology.
@@ -155,6 +185,44 @@ class Topology:
                 self.entities[creation].created_by.append(addition.id)
 
             self.transformations[addition.id] = addition
+
+    def remove_transformation(self, removal: Transformation):
+        """
+        Remove a transformation from the topology.
+
+        Parameters
+        ----------
+        removal: DataBinder.Classes.Transformation
+
+        Returns
+        -------
+        None
+        """
+
+        token = removal.id
+        tagged_entities = []
+
+        # Remove connections to entities
+        for entity in self.transformations[token].requires:
+            self.entities[entity].used_by.remove(token)
+            tagged_entities.append(entity)
+        for entity in self.transformations[token].creates:
+            self.entities[entity].created_by.remove(token)
+            tagged_entities.append(entity)
+
+        # Remove the transformation
+        del self.transformations[token]
+
+        # Remove entities which are not connected to any others.
+        remove_list = []
+        for entity in tagged_entities:
+            ent_obj = self.entities[entity]
+            if len(ent_obj.used_by) == 0 and len(ent_obj.created_by) == 0:
+                if entity not in remove_list:
+                    remove_list.append(entity)
+
+        for ent in remove_list:
+            del self.entities[ent]
 
     def add_constant(self, cons: Constant):
         """
