@@ -8,7 +8,11 @@ from .equation_system import write_equations
 TAB_SPACES = "    "
 
 
-def to_function(topology: Topology, unwrap_constants: bool = False) -> str:
+def to_function(
+    topology: Topology,
+    function_name: str = "model_function",
+    unwrap_constants: bool = False,
+) -> str:
     """
     Create a python function from a topology.
 
@@ -43,7 +47,7 @@ def to_function(topology: Topology, unwrap_constants: bool = False) -> str:
     arg_docstring = f"\n{TAB_SPACES}".join(arguments)
 
     function_text = f'''
-def model_function({arg_string}):
+def {function_name}({arg_string}):
     """
     Function docstring.
 
