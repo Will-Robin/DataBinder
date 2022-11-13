@@ -1,6 +1,5 @@
 from DataBinder.Constructors import Topology as topol
 from DataBinder.Compilers import to_function
-from DataBinder.Visualisation import Layouts
 from DataBinder.Classes import Input
 from DataBinder.Classes import Output
 from DataBinder.Classes import Constant
@@ -66,24 +65,3 @@ for e in topology.entities:
 function_text = to_function(topology, unwrap_constants=True)
 
 print(function_text, "\n")
-
-###################
-# Generate a layout
-###################
-pos = Layouts.generate_topology_layout(topology, algorithm="fdp")
-
-print("\nEntities\n--------")
-for e in topology.entities:
-    print(f"{e}: x: {pos[e][0]}, y: {pos[e][1]}")
-
-print("\nConstants\n---------")
-for c in topology.constants:
-    print(f"{c}: x: {pos[c][0]}, y: {pos[c][1]}")
-
-print("\nInputs\n------")
-for i in topology.inputs:
-    print(f"{i}: x: {pos[i][0]}, y: {pos[i][1]}")
-
-print("\nOutputs\n-------")
-for o in topology.outputs:
-    print(f"{o}: x: {pos[o][0]}, y: {pos[o][1]}")

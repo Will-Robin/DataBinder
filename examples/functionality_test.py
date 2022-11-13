@@ -6,7 +6,6 @@ from DataBinder.Constructors import Topology as topol
 from DataBinder.Compilers import to_function
 from DataBinder.Compilers import write_adjacency_matrix
 from DataBinder.Binders import data_topology
-from DataBinder.Visualisation import Layouts
 
 
 # load data
@@ -40,6 +39,3 @@ adj_list = write_adjacency_matrix(topology_container)
 print("Example adjacency list compilation:\n")
 for a in adj_list:
     print(a)
-
-# Generate a layout
-pos = Layouts.generate_topology_layout(topology_container, algorithm="fdp")

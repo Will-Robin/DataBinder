@@ -1,6 +1,5 @@
 from DataBinder.Constructors import Topology as topol
 from DataBinder.Compilers import to_equation
-from DataBinder.Visualisation import Layouts
 from DataBinder.Classes import Input
 from DataBinder.Classes import Output
 from DataBinder.Classes import Constant
