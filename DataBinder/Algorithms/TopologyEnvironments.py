@@ -157,7 +157,7 @@ def assign_entity_environments(topology: Topology) -> dict[str, int]:
     for e in entities:
         current_invariant = 0
         # used by
-        for transform in topology.entities[e].used_by:
+        for transform in topology.entities[e].required_by:
             current_invariant += len(topology.transformations[transform].requires) - 1
             current_invariant += len(topology.transformations[transform].creates)
 
@@ -183,7 +183,7 @@ def assign_entity_environments(topology: Topology) -> dict[str, int]:
             current_invariant = 1
 
             # used by
-            for transform in topology.entities[e].used_by:
+            for transform in topology.entities[e].required_by:
                 for r in topology.transformations[transform].requires:
                     if r != e:
                         current_invariant *= prime_rank[entities.index(r)]
@@ -268,12 +268,12 @@ def assign_transformation_environments(
         current_invariant = 0
         # used by
         for entity in topology.transformations[e].requires:
-            current_invariant += len(topology.entities[entity].used_by) - 1
+            current_invariant += len(topology.entities[entity].required_by) - 1
             current_invariant += len(topology.entities[entity].created_by)
 
         # created by
         for entity in topology.transformations[e].creates:
-            current_invariant += len(topology.entities[entity].used_by)
+            current_invariant += len(topology.entities[entity].required_by)
             current_invariant += len(topology.entities[entity].created_by) - 1
 
         initial_invariants.append(current_invariant)
@@ -294,7 +294,7 @@ def assign_transformation_environments(
 
             # requires
             for entity in topology.transformations[e].requires:
-                for r in topology.entities[entity].used_by:
+                for r in topology.entities[entity].required_by:
                     if r != e:
                         current_invariant *= prime_rank[transformations.index(r)]
                 for r in topology.entities[entity].created_by:
@@ -302,7 +302,7 @@ def assign_transformation_environments(
 
             # creates
             for entity in topology.transformations[e].creates:
-                for r in topology.entities[entity].used_by:
+                for r in topology.entities[entity].required_by:
                     current_invariant *= prime_rank[transformations.index(r)]
                 for r in topology.entities[entity].created_by:
                     if r != e:

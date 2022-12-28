@@ -38,7 +38,7 @@ def write_adjacency_matrix(topology: Topology) -> list[list[int]]:
         idx_1 = entity_indices[entity]
 
         # Trace forwards (1 in A_ij_ means an edge from i to j)
-        for transform in combined_entities[entity].used_by:
+        for transform in combined_entities[entity].required_by:
             for creation in combined_transformations[transform].creates:
                 idx_2 = entity_indices[creation]
                 adjacency_matrix[idx_1][idx_2] = 1

@@ -70,7 +70,7 @@ def write_equations(topology: Topology, unwrap_constants: bool = False) -> str:
                     current_token += f"*{val}"
 
         # Write outgoing expressions
-        for user in entities[entity].used_by:
+        for user in entities[entity].required_by:
 
             # Transformations
             if user in transformations:

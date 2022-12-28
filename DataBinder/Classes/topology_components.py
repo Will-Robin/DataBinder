@@ -19,14 +19,14 @@ class Entity:
             List of ids of Transformations which create this
             entity.
 
-        used_by: list[str]
+        required_by: list[str]
             List of ids of Transformations which use this
             entity in a transformation.
         """
 
         self.id: str = iden
         self.created_by: list = []
-        self.used_by: list = []
+        self.required_by: list = []
 
     def __repr__(self):
         return f"Entity: {self.id}"
@@ -160,7 +160,7 @@ class Topology:
         token = removal.id
         remove_transformations = []
         # Remove the entity from associated transformations
-        for transf in self.entities[token].used_by:
+        for transf in self.entities[token].required_by:
             self.transformations[transf].requires.remove(token)
             if len(self.transformations[transf].requires) == 0:
                 remove_transformations.append(transf)
@@ -190,7 +190,7 @@ class Topology:
         if addition.id not in self.transformations:
             for requirement in addition.requires:
                 self.add_entity(Entity(requirement))
-                self.entities[requirement].used_by.append(addition.id)
+                self.entities[requirement].required_by.append(addition.id)
 
             for creation in addition.creates:
                 self.add_entity(Entity(creation))
@@ -216,7 +216,7 @@ class Topology:
 
         # Remove connections to entities
         for entity in self.transformations[token].requires:
-            self.entities[entity].used_by.remove(token)
+            self.entities[entity].required_by.remove(token)
             tagged_entities.append(entity)
         for entity in self.transformations[token].creates:
             self.entities[entity].created_by.remove(token)
@@ -229,7 +229,7 @@ class Topology:
         remove_list = []
         for entity in tagged_entities:
             ent_obj = self.entities[entity]
-            if len(ent_obj.used_by) == 0 and len(ent_obj.created_by) == 0:
+            if len(ent_obj.required_by) == 0 and len(ent_obj.created_by) == 0:
                 if entity not in remove_list:
                     remove_list.append(entity)
 
@@ -270,7 +270,7 @@ class Topology:
         if inp.id not in self.inputs:
             for requirement in inp.requires:
                 self.add_constant(Constant(requirement, 0.0))
-                self.constants[requirement].used_by.append(inp.id)
+                self.constants[requirement].required_by.append(inp.id)
 
             for creation in inp.creates:
                 self.add_entity(Entity(creation))
@@ -294,7 +294,7 @@ class Topology:
         if output.id not in self.outputs:
             for requirement in output.requires:
                 self.add_entity(Entity(requirement))
-                self.entities[requirement].used_by.append(output.id)
+                self.entities[requirement].required_by.append(output.id)
 
             for creation in output.creates:
                 self.add_constant(Constant(creation, 0.0))
@@ -317,7 +317,7 @@ class Topology:
 
         forward_entities = []
 
-        for t in self.entities[entity.id].used_by:
+        for t in self.entities[entity.id].required_by:
             forward_entities.extend(
                 [self.entities[e] for e in self.transformations[t].creates]
             )

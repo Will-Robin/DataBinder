@@ -81,7 +81,7 @@ def to_equation(topology: Topology) -> str:
                 ent_eq += f"*{sanitise_token(d)}"
 
         # Outgoing transformations
-        for inc in entity.used_by:
+        for inc in entity.required_by:
             transform = topology.transformations[inc]
             dependencies = transform.requires
             ent_eq += f"-{rate_constants[inc]}"
