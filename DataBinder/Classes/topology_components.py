@@ -28,6 +28,12 @@ class Entity:
         self.created_by: list = []
         self.used_by: list = []
 
+    def __repr__(self):
+        return f"Entity: {self.id}"
+
+    def __str__(self):
+        return f"{self.id}"
+
 
 class Constant(Entity):
     """
@@ -65,6 +71,12 @@ class Transformation:
         self.id: str = iden
         self.requires: list = []
         self.creates: list = []
+
+    def __repr__(self):
+        return f"Transformation: {self.id}"
+
+    def __str__(self):
+        return f"{self.id}"
 
 
 class Input(Transformation):
@@ -289,3 +301,47 @@ class Topology:
                 self.constants[creation].created_by.append(output.id)
 
             self.outputs[output.id] = output
+
+    def get_forward_entities(self, entity: Entity) -> list[Entity]:
+        """
+        Find all entities that a given entity is transformed into.
+
+        Parameters
+        ----------
+        Entity: DataBinder.Classes.Entity
+
+        Returns
+        -------
+        forward_entities: list[Entity]
+        """
+
+        forward_entities = []
+
+        for t in self.entities[entity.id].used_by:
+            forward_entities.extend(
+                [self.entities[e] for e in self.transformations[t].creates]
+            )
+
+        return forward_entities
+
+    def get_backward_entities(self, entity: Entity):
+        """
+        Find all entities that contribute to creating the given entity.
+
+        Parameters
+        ----------
+        Entity: DataBinder.Classes.Entity
+
+        Returns
+        -------
+        backward_entities: list[Entity]
+        """
+
+        backward_entities = []
+
+        for t in self.entities[entity.id].created_by:
+            backward_entities.extend(
+                [self.entities[e] for e in self.transformations[t].requires]
+            )
+
+        return backward_entities
