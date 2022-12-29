@@ -25,14 +25,28 @@ class Entity:
         """
 
         self.id: str = iden
-        self.created_by: list = []
-        self.required_by: list = []
+        self.created_by: list[str] = []
+        self.required_by: list[str] = []
 
     def __repr__(self):
         return f"Entity: {self.id}"
 
     def __str__(self):
         return f"{self.id}"
+
+    def associated_transformation_keys(self) -> list[str]:
+        """
+        Get the combined keys of transformations which create the entity and
+        transformations which require the entity.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        list[str]
+        """
+        return self.created_by + self.required_by
 
 
 class Constant(Entity):
@@ -78,6 +92,19 @@ class Transformation:
     def __str__(self):
         return f"{self.id}"
 
+    def associated_entity_keys(self) -> list[str]:
+        """
+        Get all of the entities required and created by the transformation.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        list[str]
+        """
+        return self.requires + self.creates
+
 
 class Input(Transformation):
     """
@@ -87,6 +114,9 @@ class Input(Transformation):
     conditional information.
     """
 
+    def __init__(self, iden: str):
+        super().__init__(iden)
+
 
 class Output(Transformation):
     """
@@ -95,6 +125,9 @@ class Output(Transformation):
     This is an alias for a Transformation to emphasise its derivation from
     conditional information.
     """
+
+    def __init__(self, iden: str):
+        super().__init__(iden)
 
 
 class Topology:
@@ -345,3 +378,26 @@ class Topology:
             )
 
         return backward_entities
+
+    def get_surrounding_entities(self, entity: Entity) -> list[Entity]:
+        """
+        Find all of the entities surrounding the given entity (those connected
+        to the same transformations as it is).
+
+        Parameters
+        ----------
+        Entity: DataBinder.Classes.Entity
+
+        Returns
+        -------
+        surrounding_entities: list[Entity]
+        """
+
+        surrounding_transforms = entity.associated_transformation_keys()
+
+        surrounding_entities = []
+        for t in surrounding_transforms:
+            entity_keys = self.transformations[t].associated_entity_keys()
+            surrounding_entities.extend([self.entities[e] for e in entity_keys])
+
+        return surrounding_entities
