@@ -6,6 +6,7 @@ from pathlib import Path
 from DataBinder.Classes import Entity
 from DataBinder.Classes import Topology
 from DataBinder.Classes import Transformation
+from .Transformation import from_string as transformation_from_string
 
 
 def from_string(text: str) -> Topology:
@@ -37,9 +38,7 @@ def from_string(text: str) -> Topology:
         [topology.add_entity(Entity(i)) for i in inputs]
         [topology.add_entity(Entity(o)) for o in outputs]
 
-        transform: Transformation = Transformation(transf)
-        transform.requires = inputs
-        transform.creates = outputs
+        transform: Transformation = transformation_from_string(transf)
 
         topology.add_transformation(transform)
 
