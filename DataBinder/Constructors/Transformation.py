@@ -3,6 +3,7 @@ For loading Transformations from files and strings.
 """
 from DataBinder.Classes import Transformation
 
+
 def from_string(text: str) -> Transformation:
     """
     Create a transformation from a string.
@@ -30,9 +31,3 @@ def from_string(text: str) -> Transformation:
     transform.creates = outputs
 
     return transform
-
-
-
-
-
-
