@@ -7,6 +7,9 @@ from DataBinder.Compilers import to_function
 from DataBinder.Compilers import write_adjacency_matrix
 from DataBinder.Binders import data_topology
 
+# Loading a data file with string based series values
+test_data_file = "data/exampleData_2.csv"
+test_data_container = cont.from_csv(test_data_file)
 
 # load data
 data_file = "data/exampleData.csv"
