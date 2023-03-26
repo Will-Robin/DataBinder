@@ -1,5 +1,27 @@
 """
 For finding environments in topologies.
+
+# References
+
+[1] generate_primes is from this stack overflow answer ('historic' version):
+    https://stackoverflow.com/questions/1628949/to-find-first-n-prime-numbers-in-python
+    date of access: 04/10/2022
+
+[2] @article{
+        Weininger_1989,
+        doi = {10.1021/ci00062a008},
+        url = {https://doi.org/10.1021%2Fci00062a008},
+        year = 1989,
+        month = {may},
+        publisher = {American Chemical Society ({ACS})},
+        volume = {29},
+        number = {2},
+        pages = {97--101},
+        author = {David Weininger and Arthur Weininger and Joseph L. Weininger},
+        title = {{SMILES}. 2. Algorithm for generation of unique {SMILES} notation},
+        journal = {Journal of Chemical Information and Computer Sciences}
+    }
+
 """
 from DataBinder.Classes import Topology
 from DataBinder.Inspectors import test_for
@@ -7,11 +29,7 @@ from DataBinder.Inspectors import test_for
 
 def generate_primes(num: int) -> list[int]:
     """
-    Generate the first `num` prime numbers.
-
-    From this stack overflow answer ('historic' version):
-    https://stackoverflow.com/questions/1628949/to-find-first-n-prime-numbers-in-python
-    date of access: 04/10/2022
+    Generate the first `num` prime numbers.[1]
 
     Parameters
     ----------
@@ -114,7 +132,7 @@ def two_level_ranking(list_1: list[int], list_2: list[int]) -> list[int]:
 def assign_entity_environments(topology: Topology) -> dict[str, int]:
     """
     Assigning each Entity an environment based on the
-    CANGEN algorithm.
+    CANGEN algorithm.[2]
 
     1. Create initial invariants for entities based on:
         a. Number of creating transformations
@@ -224,7 +242,7 @@ def assign_transformation_environments(
 ) -> dict[str, int]:
     """
     Assigning each Tranformation an environment based on the
-    CANGEN algorithm.
+    CANGEN algorithm.[2]
 
     1. Create initial invariants for transformations based on:
         a. Number of entities used by the transformation

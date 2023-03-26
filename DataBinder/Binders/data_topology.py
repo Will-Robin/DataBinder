@@ -17,6 +17,7 @@ reserved_names = ["inflow", "outflow"]
 def validate(data: DataContainer, topology: Topology) -> list[str]:
     """
     Check the data and topology for compatibility, omissions in data, etc.
+
     Parameters
     ----------
     data: DataBinder.Classes.DataContainer
@@ -51,8 +52,8 @@ def validate(data: DataContainer, topology: Topology) -> list[str]:
             )
 
     # Check for species compatibility
-    # If entities in the data are not in the topology, then it is
-    # not compatible with the data.
+    # If entities in the data are not in the topology, then the topology is not
+    # compatible with the data.
     for variable in data_tokens:
         if variable not in topology.entities:
             error_report.append(

@@ -69,6 +69,10 @@ def pre_equilibrium(topology: Topology, transformation: str) -> Topology:
         Modified topology.
     """
     # TODO
+    print(
+        """pre_equilibrium() not yet implemented. Returning topology
+          unmodified."""
+    )
     return topology
 
 
@@ -130,7 +134,8 @@ def pseudo_first_order_transformation(
 
     (or some variation of the above)
 
-    May need some kind of tag to remind that the assumption has been applied.
+    TODO: May need some kind of tag to remind that the assumption has been
+    applied.
 
     Parameters
     ----------
