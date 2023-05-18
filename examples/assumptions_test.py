@@ -1,14 +1,14 @@
 """
 This script tests assumption-applying functions
 """
-from DataBinder.Constructors import Topology as topol
+from DataBinder.Constructors import topology_from_text_file
 from DataBinder.Assumptions import pseudo_first_order_transformation
 from DataBinder.Assumptions import pseudo_first_order_entity
 
 
 # load topology
 topology_file = "data/exampleReactionList.txt"
-topology = topol.from_text(topology_file)
+topology = topology_from_text_file(topology_file)
 
 # Specify tokens involved in assumptions
 entity_token = "O"

@@ -4,7 +4,9 @@ Convert a topology to a system of equations.
 from DataBinder.Classes import Topology
 
 
-def write_equations(topology: Topology, unwrap_constants: bool = False) -> str:
+def topology_to_equation_system(
+    topology: Topology, unwrap_constants: bool = False
+) -> str:
     """
     Create a system of equations from a topology
 

@@ -1,14 +1,14 @@
-from DataBinder.Constructors import Topology as topol
-from DataBinder.Algorithms import TopologyEnvironments
+from DataBinder.Constructors import topology_from_text_file
+from DataBinder.Algorithms import assign_entity_environments
 
 # load topology
 topology_file = f"data/exampleReactionList.txt"
-topology = topol.from_text(topology_file)
+topology = topology_from_text_file(topology_file)
 
-result = TopologyEnvironments.assign_entity_environments(topology)
+result = assign_entity_environments(topology)
 
 # reverse results:
-environments = {}
+environments: dict[int, list[str]] = {}
 for r in result:
     env = result[r]
     if env not in environments:

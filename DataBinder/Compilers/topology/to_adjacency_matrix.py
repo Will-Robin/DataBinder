@@ -4,7 +4,7 @@ Convert a topology to an adjacency matrix.
 from DataBinder.Classes import Topology
 
 
-def write_adjacency_matrix(topology: Topology) -> list[list[int]]:
+def topology_to_adjacency_matrix(topology: Topology) -> list[list[int]]:
     """
     Create an adjacency matrix from a topology.
 

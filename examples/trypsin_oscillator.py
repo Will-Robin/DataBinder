@@ -1,5 +1,5 @@
-from DataBinder.Constructors import Topology as topol
-from DataBinder.Compilers import to_function
+from DataBinder.Constructors import topology_from_text_file
+from DataBinder.Compilers import topology_to_function
 from DataBinder.Classes import Input
 from DataBinder.Classes import Output
 from DataBinder.Classes import Constant
@@ -9,7 +9,7 @@ topology_file = "data/trypsin_oscillator.txt"
 ###############
 # load topology
 ###############
-topology = topol.from_text(topology_file)
+topology = topology_from_text_file(topology_file)
 
 #################
 # Add input flows
@@ -54,6 +54,6 @@ for e in topology.entities:
 #########################
 # Create the ODE function
 #########################
-function_text = to_function(topology, unwrap_constants=True)
+function_text = topology_to_function(topology, unwrap_constants=True)
 
 print(function_text, "\n")
