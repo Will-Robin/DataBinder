@@ -126,14 +126,13 @@ def bind_data_topology(data: DataContainer, topology: Topology) -> Topology:
 
         # Create a token and object for the outlet
         outlet = Constant(output_token, value)
-
         topology.add_constant(outlet)
 
         for e in topology.entities:
             # Create a token for the output process
-            output_token = f"{e}>>{output_token}"
+            new_output_token = f"{e}>>{output_token}"
 
-            output = Output(output_token)
+            output = Output(new_output_token)
             output.requires.append(e)
             output.creates.append(output_token)
 
