@@ -2,6 +2,7 @@
 Convert a topology to a python function.
 """
 from DataBinder.Classes import Topology
+from .to_equation_system import create_token_lookup
 from .to_equation_system import topology_to_equation_system
 
 
@@ -47,6 +48,13 @@ def topology_to_function(
     arg_string = ", ".join(arguments)
 
     arg_docstring = f"\n{TAB_SPACES}".join(arguments)
+
+    # Indicate which indices map to which entities
+    token_tables = create_token_lookup(topology)
+    for table in token_tables:
+        for t in token_tables[table]:
+            arg_docstring += f"\n{TAB_SPACES}{token_tables[table][t]}: {t}"
+        arg_docstring += "\n"
 
     function_text = f'''
 def {function_name}({arg_string}):
