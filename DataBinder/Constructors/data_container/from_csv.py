@@ -1,6 +1,6 @@
 from pathlib import Path
 from DataBinder.Classes import DataContainer
-from .module import from_string
+from .from_string import data_container_from_string
 
 
 def data_container_from_csv(filename: str) -> DataContainer:
@@ -39,7 +39,7 @@ def data_container_from_csv(filename: str) -> DataContainer:
     # Read in file as text
     text = Path(filename).read_text()
 
-    data_container = from_string(text)
+    data_container = data_container_from_string(text)
 
     data_container.filename = filename
 

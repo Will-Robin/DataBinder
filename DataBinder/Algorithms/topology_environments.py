@@ -193,11 +193,9 @@ def assign_entity_environments(topology: Topology) -> dict[str, int]:
     next_rank = [0 for _ in current_rank]
 
     while True:
-
         # Calculate the multiples of primes around each entity to create
         # next_rank
         for c, e in enumerate(entities):
-
             current_invariant = 1
 
             # used by
@@ -303,11 +301,9 @@ def assign_transformation_environments(
     next_rank = [0 for _ in current_rank]
 
     while True:
-
         # Calculate the multiples of primes around each transformation to
         # create next_rank
         for c, e in enumerate(transformations):
-
             current_invariant = 1
 
             # requires

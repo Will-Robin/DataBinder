@@ -68,7 +68,6 @@ def topology_to_equation(topology: Topology) -> str:
 
     lines = []
     for e in topology.entities:
-
         entity = topology.entities[e]
         ent_eq = f"d{sanitise_token(e)}_dt = "
 
