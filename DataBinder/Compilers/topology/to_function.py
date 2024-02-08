@@ -45,6 +45,9 @@ def topology_to_function(
     if len(topology.outputs) > 0:
         arguments.append("out")
 
+    if len(topology.constants) > 0:
+        arguments.append("C")
+
     arg_string = ", ".join(arguments)
 
     arg_docstring = f"\n{TAB_SPACES}".join(arguments)
