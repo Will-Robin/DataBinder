@@ -95,7 +95,6 @@ def bind_data_topology(data: DataContainer, topology: Topology) -> Topology:
         for value_c in data.value_conditions:
             token = patterns.token_pattern.findall(value_c.id)[0]
             if token == entity and test_for.is_concentration_unit(value_c.unit):
-
                 # Create a new token for the input source
                 flow_token = f"{value_c.id}_flow"
                 input_counter += 1
