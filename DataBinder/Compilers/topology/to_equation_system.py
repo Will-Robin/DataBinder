@@ -1,6 +1,7 @@
 """
 Convert a topology to a system of equations.
 """
+
 from DataBinder.Classes import Topology
 
 

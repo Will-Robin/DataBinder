@@ -1,6 +1,7 @@
 """
 Functions which test for things.
 """
+
 from typing import Union
 from DataBinder.Inspectors import patterns
 

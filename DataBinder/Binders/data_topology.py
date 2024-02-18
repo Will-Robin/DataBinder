@@ -1,6 +1,7 @@
 """
 Binds data to a topology.
 """
+
 from DataBinder.Classes import Input
 from DataBinder.Classes import Output
 from DataBinder.Classes import Constant

@@ -1,6 +1,7 @@
 """
 Structures encapsulating data.
 """
+
 from .data_container import DataContainer
 
 from .topology_components import Topology

@@ -1,6 +1,7 @@
 """
 Convert a topology to a python function.
 """
+
 from DataBinder.Classes import Topology
 from .to_equation_system import create_token_lookup
 from .to_equation_system import topology_to_equation_system

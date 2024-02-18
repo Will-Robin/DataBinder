@@ -1,6 +1,7 @@
 """
 A structure containing data.
 """
+
 from .conditions import ConditionValue, ConditionArray
 
 

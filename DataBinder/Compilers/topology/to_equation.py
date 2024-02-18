@@ -1,6 +1,7 @@
 """
 Convert a topology to an equation system.
 """
+
 from DataBinder.Classes import Topology
 
 ILLEGAL_SYMBOLS = {"-": "_", "*": "m", "/": "d", "+": "p", ".": "o"}

@@ -1,6 +1,7 @@
 """
 Convert a topology to an adjacency matrix.
 """
+
 from DataBinder.Classes import Topology
 
 
