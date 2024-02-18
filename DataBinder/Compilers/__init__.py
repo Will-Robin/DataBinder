@@ -2,8 +2,16 @@
 For compiling structures into other encoded forms.
 """
 
-from .topology.to_adjacency_matrix import topology_to_adjacency_matrix
-from .topology.to_equation import topology_to_equation
-from .topology.to_equation_system import topology_to_equation_system
-from .topology.to_matrix_formulation import topology_to_matrix_formulation
-from .topology.to_function import topology_to_function
+from .topology import topology_to_adjacency_matrix
+from .topology import topology_to_equation
+from .topology import topology_to_equation_system
+from .topology import topology_to_matrix_formulation
+from .topology import topology_to_function
+
+__all__ = [
+    "topology_to_adjacency_matrix",
+    "topology_to_equation",
+    "topology_to_equation_system",
+    "topology_to_matrix_formulation",
+    "topology_to_function",
+]

@@ -11,7 +11,7 @@ class DataContainer:
     conditions.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Create an empty DataContainer.
 

@@ -8,7 +8,7 @@ class Entity:
     An individual unit in a structure.
     """
 
-    def __init__(self, iden: str):
+    def __init__(self, iden: str) -> None:
         """
         Attributes
         ----------
@@ -28,10 +28,10 @@ class Entity:
         self.created_by: list[str] = []
         self.required_by: list[str] = []
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Entity: {self.id}"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.id}"
 
     def associated_transformation_keys(self) -> list[str]:
@@ -56,7 +56,7 @@ class Constant(Entity):
     An alias for Entity, emphasising that it is derived from data.
     """
 
-    def __init__(self, iden: str, value: float):
+    def __init__(self, iden: str, value: float) -> None:
         super().__init__(iden)
         self.value: float = value
 
@@ -66,7 +66,7 @@ class Transformation:
     A transformation describes the conversion between entities.
     """
 
-    def __init__(self, iden: str):
+    def __init__(self, iden: str) -> None:
         """
         Attributes
         ----------
@@ -86,10 +86,10 @@ class Transformation:
         self.requires: list = []
         self.creates: list = []
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Transformation: {self.id}"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.id}"
 
     def associated_entity_keys(self) -> list[str]:
@@ -114,7 +114,7 @@ class Input(Transformation):
     conditional information.
     """
 
-    def __init__(self, iden: str):
+    def __init__(self, iden: str) -> None:
         super().__init__(iden)
 
 
@@ -126,7 +126,7 @@ class Output(Transformation):
     conditional information.
     """
 
-    def __init__(self, iden: str):
+    def __init__(self, iden: str) -> None:
         super().__init__(iden)
 
 
@@ -136,7 +136,7 @@ class Topology:
     derived types in a system.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Attributes
         ----------
@@ -161,7 +161,7 @@ class Topology:
         self.inputs: dict = {}
         self.outputs: dict = {}
 
-    def add_entity(self, addition: Entity):
+    def add_entity(self, addition: Entity) -> None:
         """
         Add an entity to the topology.
 
@@ -177,7 +177,7 @@ class Topology:
         if addition.id not in self.entities:
             self.entities[addition.id] = addition
 
-    def remove_entity(self, removal: Entity):
+    def remove_entity(self, removal: Entity) -> None:
         """
         Remove an entity from the topology.
 
@@ -207,7 +207,7 @@ class Topology:
 
         del self.entities[token]
 
-    def add_transformation(self, addition: Transformation):
+    def add_transformation(self, addition: Transformation) -> None:
         """
         Add a transformation to the topology.
 
@@ -231,7 +231,7 @@ class Topology:
 
             self.transformations[addition.id] = addition
 
-    def remove_transformation(self, removal: Transformation):
+    def remove_transformation(self, removal: Transformation) -> None:
         """
         Remove a transformation from the topology.
 
@@ -269,7 +269,7 @@ class Topology:
         for ent in remove_list:
             del self.entities[ent]
 
-    def add_constant(self, cons: Constant):
+    def add_constant(self, cons: Constant) -> None:
         """
         Add a constant to the topology.
 
@@ -287,7 +287,7 @@ class Topology:
         elif self.constants[cons.id].value == 0.0:
             self.constants[cons.id].value = cons.value
 
-    def add_input(self, inp: Input):
+    def add_input(self, inp: Input) -> None:
         """
         Add an input to the topology.
 
@@ -311,7 +311,7 @@ class Topology:
 
             self.inputs[inp.id] = inp
 
-    def add_output(self, output: Output):
+    def add_output(self, output: Output) -> None:
         """
         Add an output to the topology.
 
@@ -357,7 +357,7 @@ class Topology:
 
         return forward_entities
 
-    def get_backward_entities(self, entity: Entity):
+    def get_backward_entities(self, entity: Entity) -> list[Entity]:
         """
         Find all entities that contribute to creating the given entity.
 

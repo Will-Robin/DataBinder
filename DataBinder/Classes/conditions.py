@@ -8,7 +8,7 @@ class Condition:
     A structure containing condition information.
     """
 
-    def __init__(self, iden: str, unit: str):
+    def __init__(self, iden: str, unit: str) -> None:
         """
         Attributes
         ----------
@@ -25,7 +25,7 @@ class ConditionValue(Condition):
     A variant of a Condition when the value attribute is a single float.
     """
 
-    def __init__(self, iden: str, value: float, unit: str):
+    def __init__(self, iden: str, value: float, unit: str) -> None:
         """
         Attributes
         ----------
@@ -43,7 +43,7 @@ class ConditionArray(Condition):
     A variant of a Condition when the value attribute is a list of floats.
     """
 
-    def __init__(self, iden: str, value: list, unit: str):
+    def __init__(self, iden: str, value: list, unit: str) -> None:
         """
         Attributes
         ----------

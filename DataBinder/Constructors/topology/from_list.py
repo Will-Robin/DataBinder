@@ -28,8 +28,10 @@ def topology_from_list(terms: list[str]) -> Topology:
         inputs = LHS.split(".")
         outputs = RHS.split(".")
 
-        [topology.add_entity(Entity(i)) for i in inputs]
-        [topology.add_entity(Entity(o)) for o in outputs]
+        for i in inputs:
+            topology.add_entity(Entity(i))
+        for o in outputs:
+            topology.add_entity(Entity(o))
 
         transform: Transformation = transformation_from_string(transf)
 
