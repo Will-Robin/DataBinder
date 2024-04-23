@@ -1,10 +1,12 @@
 """
 This script calls key functions from DataBinder.
 """
+
 from DataBinder.Constructors import data_container_from_csv
 from DataBinder.Constructors import topology_from_text_file
 from DataBinder.Compilers import topology_to_function
 from DataBinder.Compilers import topology_to_adjacency_matrix
+from DataBinder.Compilers import topology_to_stoichiometric_matrix
 from DataBinder.Binders import data_topology
 
 # Loading a data file with string based series values
@@ -42,3 +44,11 @@ adj_list = topology_to_adjacency_matrix(topology_container)
 print("Example adjacency list compilation:\n")
 for a in adj_list:
     print(a)
+
+stoichiometric_matrix = topology_to_stoichiometric_matrix(topology_container)
+
+print("Example stoichiometric matrix compilation:\n")
+
+combined_entities = topology_container.entities | topology_container.constants
+for c, s in zip(combined_entities, stoichiometric_matrix):
+    print(c, s)

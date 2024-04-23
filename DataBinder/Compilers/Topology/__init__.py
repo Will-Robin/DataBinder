@@ -6,4 +6,4 @@ from .to_equation_system import topology_to_equation_system
 from .to_function import topology_to_function
 from .to_adjacency_matrix import topology_to_adjacency_matrix
 from .to_equation import topology_to_equation
-from .to_matrix_formulation import topology_to_matrix_formulation
+from .to_stoichiometric_matrix import topology_to_stoichiometric_matrix
