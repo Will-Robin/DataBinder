@@ -66,11 +66,11 @@ def rank_list(a_list: list[int]) -> list[int]:
 
     # get all individual values in order
     unique = []
-    for x in a_list:
-        if x not in unique:
-            unique.append(x)
+    for thing in a_list:
+        if thing not in unique:
+            unique.append(thing)
 
-    ranking = [sorted(unique).index(l) + 1 for l in a_list]
+    ranking = [sorted(unique).index(item) + 1 for item in a_list]
 
     return ranking
 
@@ -98,7 +98,7 @@ def prime_ranking(ranking: list[int]) -> list[int]:
 
     prime_numbers = generate_primes(num)
 
-    indices = [sorted(unique_ranks).index(l) for l in ranking]
+    indices = [sorted(unique_ranks).index(item) for item in ranking]
 
     rank_in_primes = [prime_numbers[i] for i in indices]
 
@@ -125,7 +125,7 @@ def two_level_ranking(list_1: list[int], list_2: list[int]) -> list[int]:
 
     single_level = [x[0] for x in sorted_list]
 
-    ranking = [single_level.index(l) for l in list_1]
+    ranking = [single_level.index(item) for item in list_1]
 
     return ranking
 

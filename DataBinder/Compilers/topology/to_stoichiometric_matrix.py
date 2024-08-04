@@ -25,7 +25,9 @@ def topology_to_stoichiometric_matrix(topology: Topology) -> list[list[int]]:
         topology.transformations | topology.inputs | topology.outputs
     )
 
-    stoichiometric_matrix = [[0 for x in combined_transformations] for x in combined_entities]
+    stoichiometric_matrix = [
+        [0 for x in combined_transformations] for x in combined_entities
+    ]
 
     entity_indices = {iden: c for c, iden in enumerate(combined_entities)}
 
