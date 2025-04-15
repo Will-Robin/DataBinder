@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "DataBinder"
+version = "0.0.0"
+description = "A library for constructing/editing network topologies for reaction modelling."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [{ name = "William E. Robinson", email = "william.robinson@ru.nl" }]
+maintainers = [
+  { name = "William E. Robinson", email = "william.robinson@ru.nl" },
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pdoc", "ruff", "mypy", "pylint"]
+vis = ["graphviz"]
+
+[project.urls]
+"Source" = "https://github.com/Will-Robin/DataBinder"
+"Homepage" = "https://will-robin.github.io/DataBinder/ChromProcess.html"
