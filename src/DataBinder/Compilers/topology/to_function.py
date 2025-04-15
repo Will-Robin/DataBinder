@@ -78,6 +78,6 @@ def {function_name}({arg_string}):
 
     {indented_equation_text}
 
-    return P'''
+    return [x + y for x,y in zip(S, P)]'''
 
     return function_text

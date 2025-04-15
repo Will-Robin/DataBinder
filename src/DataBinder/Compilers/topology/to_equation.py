@@ -3,6 +3,7 @@ Convert a topology to an equation system.
 """
 
 from DataBinder.Classes import Topology
+from .to_equation_system import create_token_lookup
 
 ILLEGAL_SYMBOLS = {"-": "_", "*": "m", "/": "d", "+": "p", ".": "o"}
 
@@ -52,7 +53,7 @@ def sanitise_token(token: str) -> str:
     return sanitised_token
 
 
-def topology_to_equation(topology: Topology) -> str:
+def topology_to_equation(topology: Topology, unwrap_constants: bool = False) -> str:
     """
     Convert a topology to an equation string.
 
@@ -65,29 +66,63 @@ def topology_to_equation(topology: Topology) -> str:
     equation: str
     """
 
-    rate_constants = {t: f"k{c}" for c, t in enumerate(topology.transformations)}
+    token_lookup = create_token_lookup(topology)
+
+    entity_tokens = token_lookup["entity_tokens"]
+    constant_tokens = token_lookup["constant_tokens"]
+    rate_constants = token_lookup["rate_constants"]
+    input_rates = token_lookup["input_rates"]
+    output_rates = token_lookup["output_rates"]
+    result_tokens = token_lookup["result_tokens"]
+
+    # aliases for topology attributes
+    entities = topology.entities
+    constants = topology.constants
+    transformations = topology.transformations
+    inputs = topology.inputs
+    outputs = topology.outputs
 
     lines = []
-    for e in topology.entities:
-        entity = topology.entities[e]
-        ent_eq = f"d{sanitise_token(e)}_dt = "
+    # Write equations
+    equations = ""
+    for _, entity in enumerate(entities):
+        current_token = f"d({sanitise_token(entity)})_dt = "
 
-        # Incoming transformations
-        for inc in entity.created_by:
-            transform = topology.transformations[inc]
-            dependencies = transform.requires
-            ent_eq += f"+{rate_constants[inc]}"
-            for d in dependencies:
-                ent_eq += f"*{sanitise_token(d)}"
+        # Write incoming expressions
+        for creator in entities[entity].created_by:
+            # Transformations
+            if creator in transformations:
+                input_set = transformations
+                current_token += f"+{rate_constants[creator]}"
+                for requirement in input_set[creator].requires:
+                    current_token += f"*{entity_tokens[requirement]}"
+            # Inputs
+            else:
+                input_set = inputs
+                current_token += f"+{input_rates[creator]}"
+                for requirement in input_set[creator].requires:
+                    if unwrap_constants:
+                        val = constants[requirement].value
+                    else:
+                        val = constant_tokens[requirement]
+                    current_token += f"*{val}"
 
-        # Outgoing transformations
-        for inc in entity.required_by:
-            transform = topology.transformations[inc]
-            dependencies = transform.requires
-            ent_eq += f"-{rate_constants[inc]}"
-            for d in dependencies:
-                ent_eq += f"*{sanitise_token(d)}"
+        # Write outgoing expressions
+        for user in entities[entity].required_by:
+            # Transformations
+            if user in transformations:
+                output_set = transformations
+                current_token += f"-{rate_constants[user]}"
+            # Outputs
+            else:
+                output_set = outputs
+                current_token += f"-{output_rates[user]}"
 
-        lines.append(ent_eq)
+            for requirement in output_set[user].requires:
+                current_token += f"*{entity_tokens[requirement]}"
 
-    return "\n".join(lines)
+        current_token += "\n"
+
+        equations += current_token
+
+    return equations

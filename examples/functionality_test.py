@@ -7,6 +7,8 @@ from DataBinder.Constructors import topology_from_text_file
 from DataBinder.Compilers import topology_to_function
 from DataBinder.Compilers import topology_to_adjacency_matrix
 from DataBinder.Compilers import topology_to_stoichiometric_matrix
+from DataBinder.Compilers import topology_to_equation
+from DataBinder.Compilers import topology_to_equation_system
 from DataBinder.Binders import data_topology
 
 # Loading a data file with string based series values
@@ -52,3 +54,8 @@ print("Example stoichiometric matrix compilation:\n")
 combined_entities = topology_container.entities | topology_container.constants
 for c, s in zip(combined_entities, stoichiometric_matrix):
     print(c, s)
+
+print("\nEquation system")
+print(topology_to_equation_system(topology_container))
+print("\nEquation")
+print(topology_to_equation(topology_container))
