@@ -16,8 +16,7 @@ specified, it is trivial to make sure that they are compatible.
 
 ## Usage
 
-This package requires Python 3.9 and graphviz (for generating layouts of
-topologies).
+Navigate into the DataBinder root directory, and run `pip install -e .`.
 
 See `test.py` and `example_data` for the functionality covered in this package.
 

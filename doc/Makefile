@@ -1,11 +1,11 @@
 
-ASSUMPTIONS = ../DataBinder/Assumptions/*.py
-BINDERS = ../DataBinder/Binders/*.py
-CLASSES = ../DataBinder/Classes/*.py
-COMPILERS = ../DataBinder/Compilers/*.py
-CONSTRUCTORS = ../DataBinder/Constructors/*.py
-INSPECTORS = ../DataBinder/Inspectors/*.py
-ALGORITHMS = ../DataBinder/Algorithms/*.py
+ASSUMPTIONS = ../src/DataBinder/Assumptions/*.py
+BINDERS = ../src/DataBinder/Binders/*.py
+CLASSES = ../src/DataBinder/Classes/*.py
+COMPILERS = ../src/DataBinder/Compilers/*.py
+CONSTRUCTORS = ../src/DataBinder/Constructors/*.py
+INSPECTORS = ../src/DataBinder/Inspectors/*.py
+ALGORITHMS = ../src/DataBinder/Algorithms/*.py
 
 
 DATABINDER=$(ASSUMPTIONS) $(BINDERS) $(CLASSES) \
@@ -15,4 +15,4 @@ DATABINDER=$(ASSUMPTIONS) $(BINDERS) $(CLASSES) \
 all: index.html
 
 index.html: $(DATABINDER)
-	pdoc ../DataBinder -d "numpy" -o ./
+	pdoc ../src/DataBinder -d "numpy" -o ./
