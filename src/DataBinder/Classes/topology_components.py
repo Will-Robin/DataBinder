@@ -192,18 +192,38 @@ class Topology:
 
         token = removal.id
         remove_transformations = []
+        remove_inputs = []
+        remove_outputs = []
         # Remove the entity from associated transformations
         for transf in self.entities[token].required_by:
-            self.transformations[transf].requires.remove(token)
-            if len(self.transformations[transf].requires) == 0:
-                remove_transformations.append(transf)
+            if self.transformations.get(transf):
+                self.transformations[transf].requires.remove(token)
+                if len(self.transformations[transf].requires) == 0:
+                    remove_transformations.append(transf)
+            elif self.outputs.get(transf):
+                self.outputs[transf].requires.remove(token)
+                if len(self.outputs[transf].requires) == 0:
+                    remove_outputs.append(transf)
+            else:
+                print(f"{transf} not found in topology.")
+
+
         for transf in self.entities[token].created_by:
-            self.transformations[transf].creates.remove(token)
-            if len(self.transformations[transf].creates) == 0:
-                remove_transformations.append(transf)
+            if self.transformations.get(transf):
+                self.transformations[transf].creates.remove(token)
+                if len(self.transformations[transf].creates) == 0:
+                    remove_transformations.append(transf)
+            elif self.inputs.get(transf):
+                self.inputs[transf].creates.remove(token)
+                if len(self.inputs[transf].creates) == 0:
+                    remove_inputs.append(transf)
 
         for transf in remove_transformations:
             self.remove_transformation(self.transformations[transf])
+        for transf in remove_inputs:
+            self.remove_input(self.inputs[transf])
+        for transf in remove_transformations:
+            self.remove_output(self.outputs[transf])
 
         del self.entities[token]
 
@@ -268,6 +288,42 @@ class Topology:
 
         for ent in remove_list:
             del self.entities[ent]
+
+    def remove_input(self, removal: Input) -> None:
+        """
+        Remove an input from the topology.
+
+        Parameters
+        ----------
+        removal: DataBinder.Classes.Input
+
+        Returns
+        -------
+        None
+        """
+
+        token = removal.id
+
+        # Remove the transformation
+        del self.inputs[token]
+
+    def remove_output(self, removal: Output) -> None:
+        """
+        Remove an output from the topology.
+
+        Parameters
+        ----------
+        removal: DataBinder.Classes.Output
+
+        Returns
+        -------
+        None
+        """
+
+        token = removal.id
+
+        # Remove the transformation
+        del self.outputs[token]
 
     def add_constant(self, cons: Constant) -> None:
         """
